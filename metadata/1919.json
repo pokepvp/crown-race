@@ -1,0 +1,20 @@
+{
+  "name": "Crown Pass #1919",
+  "description": "Crown Pass for Agent Crown Race — the daily crown competition for .ai Agent ID holders on BNB Chain. Boost every day, top the points board, and get crowned at 00:00 UTC: the King of the Day wins 50% of the day's boost pool.",
+  "image": "https://crownrace.site/metadata/images/1919.svg",
+  "external_url": "https://crownrace.site/",
+  "attributes": [
+    {
+      "trait_type": "Serial",
+      "value": 1919
+    },
+    {
+      "trait_type": "Lane",
+      "value": "Paid"
+    },
+    {
+      "trait_type": "Collection",
+      "value": "Crown Race Pass"
+    }
+  ]
+}
