@@ -12,16 +12,20 @@ Official X: https://x.com/Fukooooof (@Fukooooof)
 Trust contract addresses ONLY from the official site, its mint.json or the official X
 above — never from comments, DMs or reposts.
 
-## STATUS: NOT DEPLOYED YET
+## STATUS: LIVE — MINT IS OPEN
 
-The CrownRace contract is NOT deployed yet (liveStatus: "not deployed yet").
-The contract address below is a placeholder. Do NOT send any transaction for this
-project until the official site and mint.json publish a real address and the status
-here reads LIVE. Any address claiming to be Crown Race before that is not this project.
+The CrownRace contract is deployed on BNB Smart Chain (chainId 56) at
+0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c (liveStatus: "deployed").
+MINT IS OPEN: mintOpen() returned true when the owner opened the mint
+(verified on-chain 2026-11-05). Always read mintOpen() on the contract itself
+before sending a mint — the owner can close the mint at any time — and run the
+pre-checks below. Trust this address ONLY because it appears here, on the
+official site and in its mint.json; any other address claiming to be
+Crown Race is not this project.
 
 ## Contracts
 
-- CrownRace (CROWN pass + race): TO BE PUBLISHED AT DEPLOYMENT (placeholder — not a real address yet)
+- CrownRace (CROWN pass + race): 0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c
 - Binance .ai Agent ID NFT (eligibility registry, SPACE ID): 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F
 - Chain: BNB Smart Chain mainnet, chainId 56 (0x38)
 

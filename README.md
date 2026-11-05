@@ -6,7 +6,7 @@ Every UTC day, Crown Pass holders race for the crown: boost your points with sma
 
 ## Status
 
-**Not deployed yet.** The contract is built and fully tested locally (50/50 ganache checks). Deployment is done by the owner from their own wallet via `deploy.html`; mint stays closed until the owner opens it.
+**Deployed — mint is open (2026-11-05).** CrownRace is live on BNB Smart Chain at `0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c`, deployed by the owner from their own wallet via `deploy.html`, and the owner has opened the mint. The contract was built and fully tested locally (50/50 ganache checks) before deployment.
 
 ## How it works
 
@@ -22,4 +22,4 @@ Every UTC day, Crown Pass holders race for the crown: boost your points with sma
 - `llms.txt` / `mint.json` — machine-readable mint/boost/settle instructions for AI agents.
 - `contracts/CrownRace.sol` — the single contract (pass + boost + daily settle).
 
-Contract source is published here for verification; the deployed contract (once live) should be verified on BscScan/Sourcify against this source.
+Contract source is published here for verification; the deployed contract should be verified on BscScan/Sourcify against this source.

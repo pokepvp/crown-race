@@ -2,13 +2,14 @@
 // Plain static JS, no build step, no libraries. Reads go through a public
 // BSC RPC failover pool (sticky last-good endpoint, 9s timeout per call);
 // writes go through the visitor's own connected wallet only.
-// While CROWN_CONFIG.contractAddress is empty, the site renders its
-// "not live yet" state and every on-chain read is skipped safely.
+// CROWN_CONFIG.contractAddress holds the live CrownRace deployment. If it
+// were empty/invalid, the site would render its "not live yet" state and
+// every on-chain read would be skipped safely.
 // UI language: EN (default) / 简体中文 via the topbar toggle; the choice
 // persists in localStorage. The agent-prompt bodies stay in English —
 // they are machine instructions; only their framing UI is translated.
 const CROWN_CONFIG = {
-  contractAddress: "",          // CrownRace (CROWN) — filled in after the owner deploys via deploy.html
+  contractAddress: "0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c", // CrownRace (CROWN) — deployed 2026-11-05, BNB Chain mainnet
   chainId: 56,                  // BNB Smart Chain Mainnet
   chainHex: "0x38",
   agentIdAddress: "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F", // Binance .ai Agent ID NFT (SPACE ID)
