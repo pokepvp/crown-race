@@ -64,14 +64,14 @@ en: {
   statMinted: "Passes minted",
   statMintedSub: '<b id="statFreeLeft">—</b> free passes left of 500',
   noteNotDeployed: "The contract is not deployed yet — this page goes live the moment it is.",
-  noteOpen: "Mint is OPEN. Free passes are first-come, first-served — when the 500 are gone, passes cost exactly 0.0007 BNB.",
+  noteOpen: "Mint is OPEN. The 500 free passes are GONE — every pass now costs exactly 0.0007 BNB.",
   noteClosed: "The contract is deployed. Mint opens the moment the owner switches it on.",
   statusOpen: "● MINT OPEN — LIVE",
   statusClosed: "CONTRACT LIVE — MINT CLOSED",
   ctaGetPass: "Get your pass",
   ctaBoost: "Boost your points",
   getPassTitle: "🎟️ Get your Crown Race Pass",
-  getPassSub: 'One pass per wallet. Your wallet must hold a Binance <b>.ai Agent ID</b> (<span class="mono small">0x60B9…022F</span>). The first <b>500</b> passes are <b>free</b> — value exactly 0, gas only. After they are gone, a pass costs exactly <b>0.0007 BNB</b>. Total supply is capped at <b>2,222</b>. Next pass price right now: <b id="statPassPrice">—</b>.',
+  getPassSub: 'One pass per wallet. Your wallet must hold a Binance <b>.ai Agent ID</b> (<span class="mono small">0x60B9…022F</span>). The first <b>500</b> passes were <b>free</b> — they are <b>gone</b>. Every pass now costs exactly <b>0.0007 BNB</b>. Total supply is capped at <b>2,222</b>. Next pass price right now: <b id="statPassPrice">—</b>.',
   priceFree: "FREE (0 BNB, gas only)",
   promptMintTitle: "🤖 Agent-first: give this to your AI agent",
   copyPrompt: "COPY PROMPT",
@@ -79,12 +79,12 @@ en: {
   advIntro: "Connect a wallet that holds a .ai Agent ID. The buttons send the exact contract calls — no approvals are involved.",
   mintFreeBtn: "Mint free pass — mint()",
   mintPaidBtn: "Mint paid pass — 0.0007 BNB",
-  mintHint: "Free mint works only while free passes remain; the paid button works only after they run out. The contract enforces both.",
+  mintHint: "The free lane is closed — all 500 free passes are minted. The paid button mints your pass for exactly 0.0007 BNB; the contract enforces the exact amount.",
   raceTitle: "🏁 Today's race",
   raceRefresh: "Live from the contract · refreshes every 60s",
   boardNote: "Pass holders ranked by points earned today (UTC). Points reset at every settle.",
   boardNoteCapped: "Pass holders of the latest {cap} passes, ranked by points earned today (UTC). Points reset at every settle.",
-  boardEmptyPre: "The board lights up once the contract is live.",
+  boardEmptyPre: "Loading the board from the contract…",
   boardEmptyNoMint: "No passes minted yet — the board is waiting for its first racers.",
   boardEmptyNoBoost: "Passes are out, but nobody has boosted yet today. The crown is wide open.",
   noBoostsYet: "No boosts yet",
@@ -133,7 +133,7 @@ en: {
   rulesTitle: "📜 The rules — exactly as the contract enforces them",
   rule1: '<b>Who can play.</b> Your wallet must hold a Binance .ai Agent ID (the SPACE ID .ai NFT at <span class="mono small">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</span>). The contract checks this on every mint.',
   rule2: '<b>One pass per wallet.</b> A wallet can mint at most one Crown Race Pass, ever, and can hold at most one at a time. Total supply is capped at <b>2,222</b>.',
-  rule3: '<b>Free first, then paid.</b> The first <b>500</b> passes are minted with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only). Once they are gone, passes are minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>. There is no paid mint while free passes remain, and no free mint after they run out.',
+  rule3: '<b>Free lane closed.</b> The first <b>500</b> passes were minted free with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only) — they are gone. Every remaining pass is minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>; the contract accepts no other amount.',
   rule4: '<b>Mint must be open.</b> Minting works only while the owner has the mint open (<span class="mono">mintOpen()</span> = true). Prices are constants in the contract — nobody can change them after deployment.',
   rule5: '<b>Boosts.</b> Only pass holders can boost. Tier 0 costs exactly <b>0.00015 BNB</b> for <b>+5</b> points, tier 1 exactly <b>0.0005 BNB</b> for <b>+20</b>, tier 2 exactly <b>0.0015 BNB</b> for <b>+75</b>. Boosts can be repeated without limit, and the full amount of every boost enters that day\'s pool.',
   rule6: '<b>Days are UTC days.</b> Points are counted per UTC day and a day ends at <b>00:00 UTC</b> (07:00 WIB). Points do not carry over.',
@@ -173,14 +173,14 @@ zh: {
   statMinted: "已铸造通行证",
   statMintedSub: '免费通行证剩余 <b id="statFreeLeft">—</b> 张（共 500 张）',
   noteNotDeployed: "合约尚未部署——部署完成的那一刻，本页面将正式上线。",
-  noteOpen: "铸造已开启。免费通行证先到先得——500 张领完后，每张通行证价格为恰好 0.0007 BNB。",
+  noteOpen: "铸造已开启。500 张免费通行证已全部领完——现在每张通行证价格为恰好 0.0007 BNB。",
   noteClosed: "合约已部署。项目方开启铸造后即可开始铸造。",
   statusOpen: "● 铸造进行中",
   statusClosed: "合约已上线 — 铸造未开启",
   ctaGetPass: "领取通行证",
   ctaBoost: "助推积分",
   getPassTitle: "🎟️ 领取你的皇冠通行证",
-  getPassSub: '每个钱包限领一张。你的钱包必须持有币安 <b>.ai Agent ID</b>（<span class="mono small">0x60B9…022F</span>）。前 <b>500</b> 张通行证<b>免费</b>——金额恰好为 0，仅需 Gas。免费名额用完后，每张通行证价格为恰好 <b>0.0007 BNB</b>。总供应量上限为 <b>2,222</b> 张。当前下一张通行证的价格：<b id="statPassPrice">—</b>。',
+  getPassSub: '每个钱包限领一张。你的钱包必须持有币安 <b>.ai Agent ID</b>（<span class="mono small">0x60B9…022F</span>）。前 <b>500</b> 张免费通行证<b>已全部领完</b>。现在每张通行证价格为恰好 <b>0.0007 BNB</b>。总供应量上限为 <b>2,222</b> 张。当前下一张通行证的价格：<b id="statPassPrice">—</b>。',
   priceFree: "免费（0 BNB，仅需 Gas）",
   promptMintTitle: "🤖 Agent 优先：把这段提示词交给你的 AI Agent",
   copyPrompt: "复制提示词",
@@ -188,12 +188,12 @@ zh: {
   advIntro: "连接一个持有 .ai Agent ID 的钱包。下方按钮发送的正是合约调用本身——不涉及任何授权。",
   mintFreeBtn: "铸造免费通行证 — mint()",
   mintPaidBtn: "铸造付费通行证 — 0.0007 BNB",
-  mintHint: "免费铸造仅在免费通行证尚有剩余时可用；付费按钮仅在免费名额用完后可用。两者均由合约强制执行。",
+  mintHint: "免费通道已关闭——500 张免费通行证已全部铸造。付费按钮以恰好 0.0007 BNB 铸造通行证；金额由合约强制校验。",
   raceTitle: "🏁 今日赛事",
   raceRefresh: "数据实时来自合约 · 每 60 秒刷新",
   boardNote: "通行证持有者按今日（UTC）所获积分排名。积分在每次结算后清零。",
   boardNoteCapped: "最近 {cap} 张通行证的持有者，按今日（UTC）所获积分排名。积分在每次结算后清零。",
-  boardEmptyPre: "合约上线后，排行榜将在此点亮。",
+  boardEmptyPre: "正在从合约加载排行榜…",
   boardEmptyNoMint: "尚无通行证被铸造——排行榜正在等待第一批参赛者。",
   boardEmptyNoBoost: "通行证已经发放，但今天还没有人助推。皇冠虚位以待。",
   noBoostsYet: "暂无助推",
@@ -242,7 +242,7 @@ zh: {
   rulesTitle: "📜 规则 — 与合约实际执行完全一致",
   rule1: '<b>参赛资格。</b>你的钱包必须持有币安 .ai Agent ID（SPACE ID .ai NFT，地址为 <span class="mono small">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</span>）。合约会在每次铸造时进行验证。',
   rule2: '<b>每个钱包一张通行证。</b>一个钱包最多只能铸造一张皇冠通行证（终身一次），且同一时间最多持有一张。总供应量上限为 <b>2,222</b> 张。',
-  rule3: '<b>先免费，后付费。</b>前 <b>500</b> 张通行证通过 <span class="mono">mint()</span> 铸造，金额为<b>恰好 0</b>（仅需 Gas）。免费名额用完后，通行证通过 <span class="mono">mintPaid()</span> 铸造，价格为<b>恰好 0.0007 BNB</b>。免费名额尚有剩余时不能付费铸造，免费名额用完后也不能再免费铸造。',
+  rule3: '<b>免费通道已关闭。</b>前 <b>500</b> 张通行证曾通过 <span class="mono">mint()</span> 免费铸造，金额为<b>恰好 0</b>（仅需 Gas）——现已全部领完。剩余通行证一律通过 <span class="mono">mintPaid()</span> 铸造，价格为<b>恰好 0.0007 BNB</b>；合约不接受任何其他金额。',
   rule4: '<b>铸造必须处于开启状态。</b>仅当项目方开启铸造（<span class="mono">mintOpen()</span> = true）时才能铸造。价格是合约中的常量——部署后任何人都无法更改。',
   rule5: '<b>助推。</b>只有通行证持有者可以助推。档位 0 价格为恰好 <b>0.00015 BNB</b>，得 <b>+5</b> 积分；档位 1 为恰好 <b>0.0005 BNB</b>，得 <b>+20</b> 积分；档位 2 为恰好 <b>0.0015 BNB</b>，得 <b>+75</b> 积分。助推可无限次重复，每笔助推的全部金额都计入当日奖池。',
   rule6: '<b>以 UTC 日为准。</b>积分按 UTC 日统计，每日在 <b>00:00 UTC</b>（07:00 WIB）结束。积分不会结转到下一日。',
@@ -379,8 +379,7 @@ Preview first, and stop/report if any check fails:
 2. Check my wallet holds a Binance Agent ID: balanceOf(my wallet) on the .ai NFT contract ${AGENT_ID} must be more than 0.
 3. Check balanceOf(my wallet) on the Crown Race contract is 0 and hasMinted(my wallet) is false — one pass per wallet, ever.
 4. If totalMinted() is 2222, the collection is sold out — stop and report.
-   If totalMinted() is below 500, call mint() with value exactly 0 wei (gas only).
-   If totalMinted() is 500 or more, call mintPaid() with value exactly ${PAID_PRICE_WEI} wei (0.0007 BNB).
+   The free lane is closed (all 500 free passes are minted) — call mintPaid() with value exactly ${PAID_PRICE_WEI} wei (0.0007 BNB).
 Never send any other amount. No token approvals are needed — do not approve anything. Reply with the transaction link.`;
   $("promptBoost").value =
 `Boost my points in today's Crown Race on BNB Chain (chainId 56).
@@ -424,6 +423,7 @@ async function paintStats() {
       const total = Number(await readUint(CONTRACT, SEL.totalMinted));
       $("statMinted").textContent = fmtNum(total);
       $("statFreeLeft").textContent = fmtNum(Math.max(0, FREE_SUPPLY - total));
+      if (total >= FREE_SUPPLY) { const fb = $("mintFreeBtn"), pb = $("mintPaidBtn"); if (fb) { fb.disabled = true; fb.classList.remove("btn-gold"); fb.classList.add("btn-ghost"); } if (pb) { pb.classList.remove("btn-ghost"); pb.classList.add("btn-gold"); } }
     })(),
     (async () => {
       const price = await readUint(CONTRACT, SEL.passPrice);

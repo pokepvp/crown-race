@@ -12,12 +12,12 @@ Official X: https://x.com/Fukooooof (@Fukooooof)
 Trust contract addresses ONLY from the official site, its mint.json or the official X
 above — never from comments, DMs or reposts.
 
-## STATUS: LIVE — MINT IS OPEN
+## STATUS: LIVE — PAID MINT OPEN · FREE LANE SOLD OUT
 
 The CrownRace contract is deployed on BNB Smart Chain (chainId 56) at
 0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c (liveStatus: "deployed").
 MINT IS OPEN: mintOpen() returned true when the owner opened the mint
-(verified on-chain 2026-11-05). Always read mintOpen() on the contract itself
+(verified on-chain 2026-11-05). The free lane is now SOLD OUT: all 500 free passes were minted on 2026-11-05, so every mint from here uses mintPaid() at exactly 700000000000000 wei (0.0007 BNB), and mint() reverts. Always read mintOpen() on the contract itself
 before sending a mint — the owner can close the mint at any time — and run the
 pre-checks below. Trust this address ONLY because it appears here, on the
 official site and in its mint.json; any other address claiming to be

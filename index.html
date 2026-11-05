@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agent Crown Race — The Daily Crown for Binance Agent ID Holders</title>
-<meta name="description" content="A daily crown competition on BNB Chain for Binance .ai Agent ID holders. First 500 Crown Race Passes are free. Boost your points, lead the day, win the crown and 50% of the day's boost pool.">
+<meta name="description" content="A daily crown competition on BNB Chain for Binance .ai Agent ID holders. The 500 free Crown Race Passes are gone — every pass now costs exactly 0.0007 BNB. Boost your points, lead the day, win the crown and 50% of the day's boost pool.">
 <meta property="og:title" content="Agent Crown Race">
-<meta property="og:description" content="One crown per day. Free pass for the first 500 Agent ID wallets — then 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
+<meta property="og:description" content="One crown per day. The 500 free passes are gone — a pass now costs exactly 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://crownrace.site/">
 <meta property="og:image" content="https://crownrace.site/og.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Agent Crown Race — the daily crown competition for Binance Agent ID holders. First 500 passes free.">
+<meta property="og:image:alt" content="Agent Crown Race — the daily crown competition for Binance Agent ID holders. The 500 free passes are gone — passes now 0.0007 BNB.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Agent Crown Race">
-<meta name="twitter:description" content="One crown per day. Free pass for the first 500 Agent ID wallets — then 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
+<meta name="twitter:description" content="One crown per day. The 500 free passes are gone — a pass now costs exactly 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
 <meta name="twitter:image" content="https://crownrace.site/og.png">
 <meta name="twitter:site" content="@Fukooooof">
 <meta name="twitter:creator" content="@Fukooooof">
@@ -87,8 +87,8 @@
     <h2 data-i18n="getPassTitle">🎟️ Get your Crown Race Pass</h2>
     <p class="panel-sub" data-i18n-html="getPassSub">
       One pass per wallet. Your wallet must hold a Binance <b>.ai Agent ID</b>
-      (<span class="mono small">0x60B9…022F</span>). The first <b>500</b> passes are
-      <b>free</b> — value exactly 0, gas only. After they are gone, a pass costs
+      (<span class="mono small">0x60B9…022F</span>). The first <b>500</b> passes were
+      <b>free</b> — they are <b>gone</b>. Every pass now costs
       exactly <b>0.0007 BNB</b>. Total supply is capped at <b>2,222</b>.
       Next pass price right now: <b id="statPassPrice">—</b>.
     </p>
@@ -107,7 +107,7 @@
           <button class="btn btn-gold" id="mintFreeBtn" type="button" data-i18n="mintFreeBtn">Mint free pass — mint()</button>
           <button class="btn btn-ghost" id="mintPaidBtn" type="button" data-i18n="mintPaidBtn">Mint paid pass — 0.0007 BNB</button>
         </div>
-        <p class="small muted" id="mintHint" data-i18n="mintHint">Free mint works only while free passes remain; the paid button works only after they run out. The contract enforces both.</p>
+        <p class="small muted" id="mintHint" data-i18n="mintHint">The free lane is closed — all 500 free passes are minted. The paid button mints your pass for exactly 0.0007 BNB; the contract enforces the exact amount.</p>
       </div>
     </details>
   </section>
@@ -120,7 +120,7 @@
     </div>
     <p class="panel-sub" id="boardNote" data-i18n="boardNote">Pass holders ranked by points earned today (UTC). Points reset at every settle.</p>
     <div id="boardList" class="board-list">
-      <p class="empty" data-i18n="boardEmptyPre">The board lights up once the contract is live.</p>
+      <p class="empty" data-i18n="boardEmptyPre">Loading the board from the contract…</p>
     </div>
   </section>
 
@@ -204,7 +204,7 @@
     <ol class="rules-list">
       <li data-i18n-html="rule1"><b>Who can play.</b> Your wallet must hold a Binance .ai Agent ID (the SPACE ID .ai NFT at <span class="mono small">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</span>). The contract checks this on every mint.</li>
       <li data-i18n-html="rule2"><b>One pass per wallet.</b> A wallet can mint at most one Crown Race Pass, ever, and can hold at most one at a time. Total supply is capped at <b>2,222</b>.</li>
-      <li data-i18n-html="rule3"><b>Free first, then paid.</b> The first <b>500</b> passes are minted with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only). Once they are gone, passes are minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>. There is no paid mint while free passes remain, and no free mint after they run out.</li>
+      <li data-i18n-html="rule3"><b>Free lane closed.</b> The first <b>500</b> passes were minted free with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only) — they are gone. Every remaining pass is minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>; the contract accepts no other amount.</li>
       <li data-i18n-html="rule4"><b>Mint must be open.</b> Minting works only while the owner has the mint open (<span class="mono">mintOpen()</span> = true). Prices are constants in the contract — nobody can change them after deployment.</li>
       <li data-i18n-html="rule5"><b>Boosts.</b> Only pass holders can boost. Tier 0 costs exactly <b>0.00015 BNB</b> for <b>+5</b> points, tier 1 exactly <b>0.0005 BNB</b> for <b>+20</b>, tier 2 exactly <b>0.0015 BNB</b> for <b>+75</b>. Boosts can be repeated without limit, and the full amount of every boost enters that day's pool.</li>
       <li data-i18n-html="rule6"><b>Days are UTC days.</b> Points are counted per UTC day and a day ends at <b>00:00 UTC</b> (07:00 WIB). Points do not carry over.</li>
