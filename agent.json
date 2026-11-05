@@ -1,0 +1,30 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "Crown Race",
+  "description": "Daily crown competition for Binance .ai Agent ID holders on BNB Chain. Pass holders boost their points during the day (0.00015 BNB = +5, 0.0005 = +20, 0.0015 = +75) and the day's points leader takes the crown plus 50% of that day's boost pool at the permissionless 00:00 UTC settleDay(). Machine-readable spec: llms.txt and mint.json on the official site.",
+  "image": "https://crownrace.site/og.png",
+  "services": [
+    {
+      "name": "web",
+      "endpoint": "https://crownrace.site"
+    },
+    {
+      "name": "llms.txt",
+      "endpoint": "https://crownrace.site/llms.txt"
+    },
+    {
+      "name": "mint.json",
+      "endpoint": "https://crownrace.site/mint.json"
+    }
+  ],
+  "registrations": [],
+  "properties": {
+    "chainId": 56,
+    "network": "BNB Chain (BSC mainnet)",
+    "contracts": {
+      "CrownRace": "0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c"
+    },
+    "officialSite": "https://crownrace.site",
+    "x": "@PlayCrownRace"
+  }
+}
