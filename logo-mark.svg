@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Agent Crown Race crown mark">
+<title>Agent Crown Race</title>
+
+<defs>
+  <linearGradient id="goldMark" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffe89a"/>
+    <stop offset="1" stop-color="#c9971f"/>
+  </linearGradient>
+</defs>
+
+<!-- chunky crown body: three thick points, straight edges, no facets -->
+<path d="M56 358 L88 178 L176 266 L256 134 L336 266 L424 178 L456 358 Z"
+      fill="url(#goldMark)" stroke="#43300a" stroke-width="16" stroke-linejoin="round"/>
+
+<!-- orb finials: big solid gold balls sitting on the points -->
+<g fill="url(#goldMark)" stroke="#43300a" stroke-width="14">
+  <circle cx="92" cy="146" r="36"/>
+  <circle cx="256" cy="98" r="42"/>
+  <circle cx="420" cy="146" r="36"/>
+</g>
+<g fill="#ffffff" opacity=".85">
+  <circle cx="78" cy="132" r="9"/>
+  <circle cx="240" cy="82" r="11"/>
+  <circle cx="406" cy="132" r="9"/>
+</g>
+
+<!-- thick base band -->
+<rect x="48" y="356" width="416" height="98" rx="18"
+      fill="url(#goldMark)" stroke="#43300a" stroke-width="16"/>
+
+<!-- one large center ruby: oversized diamond mounted on the band, solid red -->
+<polygon points="256,348 326,405 256,462 186,405" fill="#d81f3e" stroke="#5f0815" stroke-width="9" stroke-linejoin="round"/>
+<polygon points="256,356 238,394 256,394" fill="#ffffff" opacity=".35"/>
+
+</svg>

@@ -40,7 +40,7 @@ a { color: var(--gold2); }
   border-bottom: 1px solid var(--line);
 }
 .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text); letter-spacing: .06em; font-size: .95rem; }
-.brand-crown { width: 32px; height: 32px; display: block; filter: drop-shadow(0 0 8px rgba(212, 175, 55, .55)); }
+.brand-crown { width: 46px; height: 46px; display: block; filter: drop-shadow(0 0 8px rgba(212, 175, 55, .55)); }
 .brand-text b { color: var(--gold2); }
 .topbar-right { display: flex; align-items: center; gap: 8px; }
 .status-pill {
