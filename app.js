@@ -679,8 +679,8 @@ async function refreshAll() {
 }
 document.addEventListener("DOMContentLoaded", () => {
   buildPrompts();
-  paintFooter();
   applyLang();
+  paintFooter();
   loadBoardCache();
   loadFounderCache();
   if (contractsReady()) { refreshAll(); setInterval(refreshAll, 60000); }
