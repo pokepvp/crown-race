@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c75e"/>
+      <stop offset="1" stop-color="#d4af37"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="496" height="496" rx="96" fill="#121218" stroke="#2a2a38" stroke-width="8"/>
+  <!-- crown -->
+  <path fill="url(#g)" d="M96 356 L76 168 L178 262 L256 128 L334 262 L436 168 L416 356 Z"/>
+  <rect x="96" y="372" width="320" height="42" rx="12" fill="url(#g)"/>
+  <!-- crown jewels -->
+  <circle cx="76" cy="146" r="24" fill="url(#g)"/>
+  <circle cx="256" cy="104" r="28" fill="url(#g)"/>
+  <circle cx="436" cy="146" r="24" fill="url(#g)"/>
+  <circle cx="256" cy="300" r="20" fill="#121218" opacity="0.85"/>
+  <circle cx="160" cy="312" r="13" fill="#121218" opacity="0.85"/>
+  <circle cx="352" cy="312" r="13" fill="#121218" opacity="0.85"/>
+</svg>

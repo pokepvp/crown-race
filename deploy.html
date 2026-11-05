@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<title>Deploy — Agent Crown Race</title>
+<meta name="description" content="Owner deploy tool for the Agent Crown Race contract on BNB Chain." />
+<meta name="theme-color" content="#0b0b0e" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<style>
+  :root { --bg:#0b0b0e; --panel:#15151d; --ink:#f5f1e8; --muted:#989da7; --line:#2a2d34; --gold:#efb84b; --gold-2:#ffd986; --gold-ink:#14110a; --err:#ff7a6b; --ok:#9bffcd; --mono:"DM Mono", ui-monospace, monospace; --sans:"Space Grotesk", system-ui, sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); }
+  header { position:sticky; top:0; z-index:5; background:rgba(11,11,14,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .bar { max-width:860px; margin:0 auto; padding:12px 18px; display:flex; align-items:center; gap:12px; }
+  .mark { width:30px; height:30px; background:var(--gold); color:var(--gold-ink); display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .brand { font-weight:700; letter-spacing:.06em; }
+  .brand small { display:block; font-family:var(--mono); font-weight:400; font-size:9px; letter-spacing:.14em; color:var(--muted); }
+  .spacer { flex:1; }
+  .pill { font-family:var(--mono); font-size:9px; letter-spacing:.12em; border:1px solid var(--line); border-radius:100px; padding:6px 10px; color:var(--muted); background:var(--panel); }
+  .backlink { font-family:var(--mono); font-size:10px; letter-spacing:.08em; color:var(--gold-2); text-decoration:none; border-bottom:1px solid var(--gold); }
+  main { max-width:860px; margin:0 auto; padding:26px 18px 60px; }
+  h1 { font-size:30px; margin:4px 0 6px; letter-spacing:-.01em; }
+  .intro { color:var(--muted); font-size:14px; line-height:1.65; max-width:640px; margin:0 0 22px; }
+  button { font-family:var(--mono); font-size:11px; letter-spacing:.06em; border:1px solid var(--gold); background:var(--gold); color:var(--gold-ink); padding:11px 16px; cursor:pointer; font-weight:700; }
+  button.lime { background:var(--gold); color:var(--gold-ink); border-color:var(--gold); }
+  button.ghost { background:transparent; color:var(--ink); border-color:var(--line); font-weight:400; }
+  button.warn { background:transparent; color:var(--err); border-color:var(--err); font-weight:400; }
+  button:disabled { opacity:.38; cursor:not-allowed; }
+  .step { background:var(--panel); border:1px solid var(--line); padding:18px; margin-bottom:14px; }
+  .step-head { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .step-num { font-family:var(--mono); font-size:11px; background:var(--gold); color:var(--gold-ink); padding:4px 8px; font-weight:700; }
+  .step h2 { font-size:18px; margin:0; }
+  .step p { color:var(--muted); font-size:13px; line-height:1.6; margin:6px 0 12px; }
+  .step p b { color:var(--ink); }
+  .status { font-family:var(--mono); font-size:10.5px; border:1px dashed var(--line); padding:9px 11px; color:var(--muted); margin:0 0 12px; word-break:break-word; }
+  .status.working { border-color:#c9a227; color:var(--gold-2); }
+  .status.done { border-color:var(--ok); color:var(--ok); border-style:solid; }
+  .status.error { border-color:var(--err); color:var(--err); border-style:solid; }
+  .addrbox { display:none; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .addrbox.show { display:flex; }
+  .addrbox code { font-family:var(--mono); font-size:11px; background:var(--bg); border:1px solid var(--line); padding:8px 10px; word-break:break-all; flex:1; min-width:220px; }
+  .addrbox a { font-family:var(--mono); font-size:10px; color:var(--gold-2); }
+  .addrbox button { padding:8px 12px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  input[type="text"] { font-family:var(--mono); font-size:12px; border:1px solid var(--line); padding:11px 12px; width:340px; background:var(--bg); color:var(--ink); }
+  input[type="text"].wide { width:460px; max-width:100%; }
+  label.f { font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; color:var(--muted); display:block; margin-bottom:5px; }
+  .big { font-family:var(--mono); font-size:12px; background:var(--bg); border:1px solid var(--gold); color:var(--gold-2); padding:10px 12px; word-break:break-all; margin:0 0 12px; }
+  .summary { background:#14110a; color:var(--ink); border:1px solid var(--gold); padding:20px; margin-top:20px; }
+  .summary h2 { margin:0 0 8px; font-size:18px; color:var(--gold-2); }
+  .summary p { color:var(--muted); font-size:13px; line-height:1.6; }
+  .summary textarea { width:100%; min-height:150px; background:#0c0e11; color:var(--gold-2); border:1px solid var(--line); font-family:var(--mono); font-size:11.5px; padding:12px; }
+  .logwrap { background:var(--panel); border:1px solid var(--line); padding:18px; margin-top:14px; }
+  .logwrap h2 { font-size:15px; margin:0 0 10px; }
+  #logPanel { margin:0; max-height:220px; overflow:auto; font-family:var(--mono); font-size:10.5px; line-height:1.7; color:var(--muted); white-space:pre-wrap; word-break:break-word; }
+  footer { max-width:860px; margin:0 auto; padding:0 18px 40px; color:var(--muted); font-size:12px; line-height:1.7; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="mark" aria-hidden="true">👑</div>
+    <div class="brand">AGENT CROWN RACE<small>OWNER DEPLOY TOOL</small></div>
+    <div class="spacer"></div>
+    <span class="pill">BNB CHAIN · MAINNET 56</span>
+    <a class="backlink" href="index.html">← Back to site</a>
+  </div>
+</header>
+<main>
+  <h1>Deploy CrownRace</h1>
+  <p class="intro">This page deploys the single Agent Crown Race contract (Crown Race Pass, CROWN) from your own wallet. The constructor takes one argument — the Binance Agent ID (.ai) registry — and it is prefilled below with the real SPACE ID contract for BNB mainnet. The mint starts <b>closed</b>: this page never opens it automatically, nobody can mint until you open it yourself in step 04. Every transaction is signed in your wallet; this page never asks for a seed phrase or private key.</p>
+
+  <section class="step" id="step1">
+    <div class="step-head"><span class="step-num">01</span><h2>Connect wallet</h2></div>
+    <p>Connect the wallet that should own the contract. The page switches your wallet to BNB Chain mainnet (chain 56) automatically, adding the network first if your wallet does not have it yet.</p>
+    <p class="status" id="status1">Not connected. Connect the owner wallet to begin.</p>
+    <div class="row">
+      <button class="lime" id="connectBtn" type="button">CONNECT WALLET</button>
+      <button class="ghost" id="refreshBtn" type="button" disabled>REFRESH STATE</button>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <div class="step-head"><span class="step-num">02</span><h2>Deploy CrownRace</h2></div>
+    <p>The daily crown competition: 2,222 Crown Passes, the first 500 free for Agent ID holders (1 per wallet), then 0.0007 BNB per pass. Boosts (0.00015 / 0.0005 / 0.0015 BNB) buy race points; each day's winner takes 50% of that day's boost pool at settle, the owner keeps 50%.</p>
+    <p>The contract's constructor takes <b>one argument</b> — the Agent ID registry the mint gate checks. For BNB mainnet it <b>must</b> be the SPACE ID .ai contract, prefilled here. Check it before you deploy; it is immutable once deployed.</p>
+    <p class="big">Constructor argument — Agent ID registry:<br />0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</p>
+    <div class="row" style="margin-bottom:12px">
+      <div><label class="f" for="registryInput">REGISTRY ADDRESS (CONSTRUCTOR ARGUMENT)</label><input type="text" class="wide" id="registryInput" value="0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F" spellcheck="false" /></div>
+    </div>
+    <p class="status" id="status2">Waiting — connect the owner wallet first.</p>
+    <div class="row">
+      <button id="deployBtn" type="button" disabled>DEPLOY CROWNRACE</button>
+      <button class="warn" id="forgetBtn" type="button" style="display:none">FORGET SAVED ADDRESS</button>
+    </div>
+    <div class="addrbox" id="addrbox2"><code id="addr2"></code><button class="ghost" data-copy="addr2" type="button">COPY</button><a id="scan2" target="_blank" rel="noopener">BscScan ↗</a></div>
+  </section>
+
+  <section class="step" id="step3">
+    <div class="step-head"><span class="step-num">03</span><h2>Set base URI</h2></div>
+    <p>tokenURI(id) returns baseURI + id + ".json". The field below is a <b>placeholder</b> — leave it alone until a domain exists, then replace it with the real metadata folder URL (it must end with "/"). Minting, boosting and settling all work without it; this only names where pass artwork metadata will live.</p>
+    <p class="status" id="status3">Waiting — deploy CrownRace first.</p>
+    <div class="row">
+      <div><label class="f" for="baseUriInput">BASE URI</label><input type="text" class="wide" id="baseUriInput" value="https://YOUR-DOMAIN/metadata/" spellcheck="false" /></div>
+      <button id="setBaseUriBtn" type="button" disabled>SET BASE URI</button>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <div class="step-head"><span class="step-num">04</span><h2>Open / close mint (owner only)</h2></div>
+    <p>Minting starts <b>closed</b> when CrownRace is deployed — nobody can mint until the owner opens it. Open it here when you are ready to launch, and close it again any time the same way. Only the owner wallet can do this; the contract rejects everyone else.</p>
+    <p class="status" id="status4">Waiting — deploy CrownRace first.</p>
+    <div class="row">
+      <button id="openMintBtn" type="button" disabled>OPEN MINT</button>
+      <button id="closeMintBtn" type="button" disabled>CLOSE MINT</button>
+    </div>
+  </section>
+
+  <section class="step" id="step5">
+    <div class="step-head"><span class="step-num">05</span><h2>Race controls</h2></div>
+    <p><b>Settle day:</b> closes the oldest unsettled day, pays that day's points leader 50% of its boost pool, and credits the other 50% to the owner balance. It is permissionless — anyone can call it, including a holder's agent — but the button is here so the owner can settle too. If several idle days passed, call it once per day until it catches up. <b>Pause / unpause boost</b> is owner-only and stops new boosts while paused; settling and minting are unaffected.</p>
+    <p class="status" id="status5">Waiting — deploy CrownRace first.</p>
+    <div class="row">
+      <button id="settleBtn" type="button" disabled>SETTLE DAY</button>
+      <button class="ghost" id="pauseBoostBtn" type="button" disabled>PAUSE BOOST</button>
+      <button class="ghost" id="unpauseBoostBtn" type="button" disabled>UNPAUSE BOOST</button>
+    </div>
+  </section>
+
+  <section class="step" id="step6">
+    <div class="step-head"><span class="step-num">06</span><h2>Withdraw owner balance (owner only)</h2></div>
+    <p>The owner balance holds the owner's 50% share of every settled day pool, plus every paid-pass payment (0.0007 BNB each). Withdraw sends the whole balance to the owner wallet. An unsettled day's pool can never be withdrawn — it stays locked until that day is settled.</p>
+    <p class="status" id="status6">Waiting — deploy CrownRace first.</p>
+    <div class="row">
+      <button id="withdrawBtn" type="button" disabled>WITHDRAW</button>
+      <span class="pill" id="balancePill">OWNER BALANCE: —</span>
+    </div>
+  </section>
+
+  <section class="summary">
+    <h2>Deployment summary — send this to Muse</h2>
+    <p>When the deploy is done, copy this whole box in one paste and send it back. The contract address gets wired into the site's CROWN_CONFIG in app.js, the base URI and launch steps follow from there. The address is also kept in this browser, so you can reload this page without losing it.</p>
+    <textarea id="summaryBox" readonly>Not deployed yet.</textarea>
+    <div class="row" style="margin-top:12px"><button class="lime" id="copySummaryBtn" type="button">COPY SUMMARY</button></div>
+  </section>
+
+  <section class="logwrap">
+    <h2>Log</h2>
+    <pre id="logPanel">Page ready. Nothing has been sent anywhere yet.</pre>
+  </section>
+</main>
+<footer>
+  Owner tool for Agent Crown Race. Deployment pays network gas from your wallet. Only use this page with the wallet that should own the contract. The mint starts closed and this page never opens it automatically.<br />
+  <a class="backlink" href="index.html">← Back to site</a>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script>
+"use strict";
+const REGISTRY_DEFAULT = "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F";
+const BYTECODE = "0x60a03461022457601f6125ca38819003918201601f19168301916001600160401b038311848410176102295780849260209460405283398101031261022457516001600160a01b0381168082036102245761005b60005461023f565b601f81116101db575b507f43726f776e20526163652050617373000000000000000000000000000000001e6000556001546100959061023f565b601f8111610191575b50600a6421a927aba760d91b0160015560ff196004541660045560ff19600d5416600d551561015d57600280546001600160a01b031916331790556080526000196201518042049081019081116101475760145565886c98b760006007556601c6bf526340006008556605543df729c0006009556005600a556014600b55604b600c55604051612350908161027a82396080518181816103d401528181610eb001526116e80152f35b634e487b7160e01b600052601160045260246000fd5b60405162461bcd60e51b815260206004820152600c60248201526b5a65726f206164647265737360a01b6044820152606490fd5b6001600052601f0160051c7fb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6908101905b8181106101cf575061009e565b600081556001016101c2565b60008052601f0160051c7f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563908101905b8181106102185750610064565b6000815560010161020b565b600080fd5b634e487b7160e01b600052604160045260246000fd5b90600182811c9216801561026f575b602083101461025957565b634e487b7160e01b600052602260045260246000fd5b91607f169161024e56fe608080604052600436101561001357600080fd5b60003560e01c90816301ffc9a714611a855750806306fdde03146119fd578063081812fc146119a6578063095ea7b3146118ec5780631249c58b1461169757806317f6425b1461166857806323b872dd1461165157806324bbd0491461162e578063294b4b60146115c357806332cb6b0c146115a657806338e21cce146115675780633ccfd60b1461146d57806340eedabb1461143657806342842e0e146113fe5780634c4bd4c614611200578063524217da146113d257806355f804b314611248578063589e55dc146112005780636352211e146111d057806364eb5a86146111a157806369907b9b14610e535780636c0360eb14610dbd57806370a0823114610d785780637f0b251214610b7b57806380bc717514610b5d5780638462151c14610aa35780638da5cb5b14610a7a5780638fe9201f14610a5757806395d89b41146109875780639858cf191461096a578063a22cb465146108dd578063a2309ff8146108bf578063b88d4fde14610828578063bddb4076146107fc578063bedcf003146107de578063c26d3c7d146107b2578063c37b836214610790578063c87b56dd14610675578063ca3286f51461063a578063ca624b7714610463578063cf637ac314610437578063d9bf359014610403578063e84f43b7146103be578063e985e9c514610363578063f1b4b8a21461032f578063f2cf1b95146102f5578063f2fde38b1461029f5763f8004d311461022f57600080fd5b3461029a57602036600319011261029a577f0b4905c1ec70314aeecbb4133671ed6652620ca58efea74ec87000eceec8d985602061026b611bfa565b61028060018060a01b03600254163314611f95565b151560ff196004541660ff821617600455604051908152a1005b600080fd5b3461029a57602036600319011261029a576102b8611b94565b600254906102d0336001600160a01b03841614611f95565b6001600160a01b0316906102e58215156120ce565b6001600160a01b03191617600255005b3461029a57602036600319011261029a576001600160a01b03610316611b94565b1660005260136020526020604060002054604051908152f35b3461029a57602036600319011261029a576004356000526012602052602060018060a01b0360406000205416604051908152f35b3461029a57604036600319011261029a5761037c611b94565b610384611baa565b9060018060a01b0316600052601960205260406000209060018060a01b0316600052602052602060ff604060002054166040519015158152f35b3461029a57600036600319011261029a576040517f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03168152602090f35b3461029a57602036600319011261029a576004356000526010602052602060018060a01b0360406000205416604051908152f35b3461029a57602036600319011261029a57600435600052600f6020526020604060002054604051908152f35b3461029a57600036600319011261029a57601454600181018091116105b057620151804204811015610605576014819055600081815260106020908152604080832054600f9092529091205491906001600160a01b0316801515806105fc575b156105c6578260011c8084039384116105b0576104e2846015546120c1565b601555816000526013602052604060002090815492600184018094116105b05780600096957f8223258d09be5437dc584df7897152b861e9bfb7d741a58ce57d6d0802450383604089988998899855838852601260205281882060018060a01b0386166001600160601b0360a01b8254161790558151908782526020820152a35af161056c611fe9565b501561057457005b60405162461bcd60e51b8152602060048201526014602482015273141c9a5e99481c185e5b595b9d0819985a5b195960621b6044820152606490fd5b634e487b7160e01b600052601160045260246000fd5b50600091507f8223258d09be5437dc584df7897152b861e9bfb7d741a58ce57d6d080245038360408051848152846020820152a3005b508215156104c3565b60405162461bcd60e51b815260206004820152600d60248201526c11185e481b9bdd08195b991959609a1b6044820152606490fd5b3461029a57600036600319011261029a576101f46003541060001461066657602060005b604051908152f35b602066027ca57357c00061065e565b3461029a57602036600319011261029a576106b26004358060005260166020526106ad60018060a01b03604060002054161515611c37565b612232565b60405160006006546106c381611af0565b906001811690811561076d5750600114610728575b506005826020836106f58761071096610724995194859201611b4c565b0164173539b7b760d91b815203601a19810184520182611b2a565b604051918291602083526020830190611b6f565b0390f35b905060066000526000805160206122fb8339815191526000905b828210610757575050810160200160056106d8565b6001816020925483858801015201910190610742565b60ff191660208086019190915282151590920284019091019150600590506106d8565b3461029a57600036600319011261029a57602060405166027ca57357c0008152f35b3461029a57602036600319011261029a57600435600381101561029a57602090600a0154604051908152f35b3461029a57600036600319011261029a576020601554604051908152f35b3461029a57602036600319011261029a57600435600381101561029a5760209060070154604051908152f35b3461029a57608036600319011261029a57610841611b94565b610849611baa565b6044359160643567ffffffffffffffff811161029a5761086d903690600401611c09565b93909261087b828285611cb4565b61088485611fcd565b926108926040519485611b2a565b858452368686011161029a5760006020876108bd986108b898838901378601015261215a565b612019565b005b3461029a57600036600319011261029a576020600354604051908152f35b3461029a57604036600319011261029a576108f6611b94565b6024359081151580920361029a57336000526019602052604060002060018060a01b038216600052602052604060002060ff1981541660ff841617905560405191825260018060a01b0316907f17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c3160203392a3005b3461029a57600036600319011261029a5760206040516101f48152f35b3461029a57600036600319011261029a57604051600154600090816109ab82611af0565b8085529160018116908115610a3057506001146109d3575b6107248461071081860382611b2a565b600181527fb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6939250905b808210610a1657509091508101602001610710826109c3565b9192600181602092548385880101520191019092916109fd565b60ff191660208087019190915292151560051b8501909201925061071091508390506109c3565b3461029a57600036600319011261029a57602060ff600d54166040519015158152f35b3461029a57600036600319011261029a576002546040516001600160a01b039091168152602090f35b3461029a57602036600319011261029a576001600160a01b03610ac4611b94565b16600052601a60205260406000206040518060208354918281520190819360005260206000209060005b818110610b475750505081610b04910382611b2a565b6040519182916020830190602084525180915260408301919060005b818110610b2e575050500390f35b8251845285945060209384019390920191600101610b20565b8254845260209093019260019283019201610aee565b3461029a57600036600319011261029a576020601454604051908152f35b602036600319011261029a5760043560ff811680820361029a5760ff600d5416610d44576003811015610d14576003821015610cfe57610bc08260070154341461207e565b33600052601760205260406000205415610cc9576201518042049182600052600e602052604060002060018060a01b033316600052602052604060002054610c10600092600a01918254906120c1565b91848152600e6020526040812060018060a01b0333168252602052826040822055848152600f60205260408120610c483482546120c1565b9055848152601160205260408120548311610c98575b5054604051928352602083015260408201527f890515d53e5bfcc0a9b403457c89ceb69369958275ce3d89ccb9f0753f51006e60603392a3005b84815260106020908152604080832080546001600160a01b0319163317905586835260119091528120839055610c5e565b60405162461bcd60e51b815260206004820152600d60248201526c14185cdcc81c995c5d5a5c9959609a1b6044820152606490fd5b634e487b7160e01b600052603260045260246000fd5b60405162461bcd60e51b81526020600482015260086024820152672130b2103a34b2b960c11b6044820152606490fd5b60405162461bcd60e51b815260206004820152600c60248201526b109bdbdcdd081c185d5cd95960a21b6044820152606490fd5b3461029a57602036600319011261029a576001600160a01b03610d99611b94565b16610da58115156120ce565b60005260176020526020604060002054604051908152f35b3461029a57600036600319011261029a5760405160065460009081610de182611af0565b8085529160018116908115610a305750600114610e08576107248461071081860382611b2a565b600681526000805160206122fb833981519152939250905b808210610e3957509091508101602001610710826109c3565b919260018160209254838588010152019101909291610e20565b600036600319011261029a576101f46003541061116757610e7c66027ca57357c000341461207e565b600060ff6004541615611131576108ae6003541015611101576040516370a0823160e01b81523360048201526020816024817f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165afa9081156110f65782916110c0575b501561108757338152600560205260ff60408220541661104c573381526017602052604081205461101057604090338152600560205220600160ff198254161790556020610f37600354612109565b806003558060005260168252604060002060018060a01b0333166001600160601b0360a01b8254161790553360005260178252600160406000205533600052601a825260406000205481600052601b835260406000205533600052601a8252610fa4816040600020612130565b80604051813360007fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8180a4600181527ffee3adb92c9a2665de5c6e292be62f184708a973dabb8ebc5537a7f642497fd4843392a3611005346015546120c1565b601555604051908152f35b60405162461bcd60e51b8152602060048201526014602482015273416c726561647920686f6c64732061207061737360601b6044820152606490fd5b60405162461bcd60e51b815260206004820152601360248201527213db99481c185cdcc81c195c881dd85b1b195d606a1b6044820152606490fd5b60405162461bcd60e51b81526020600482015260116024820152701059d95b9d081251081c995c5d5a5c9959607a1b6044820152606490fd5b90506020813d6020116110ee575b816110db60209383611b2a565b810103126110ea575182610ee8565b5080fd5b3d91506110ce565b6040513d84823e3d90fd5b60405162461bcd60e51b815260206004820152600860248201526714dbdb19081bdd5d60c21b6044820152606490fd5b60405162461bcd60e51b815260206004820152600e60248201526d135a5b9d081a5cc818db1bdcd95960921b6044820152606490fd5b60405162461bcd60e51b8152602060048201526012602482015271233932b2903830b9b9b2b9903932b6b0b4b760711b6044820152606490fd5b3461029a57600036600319011261029a5762015180420460005260116020526020604060002054604051908152f35b3461029a57602036600319011261029a5760206111ee600435612058565b6040516001600160a01b039091168152f35b3461029a57604036600319011261029a57611219611baa565b600435600052600e60205260406000209060018060a01b03166000526020526020604060002054604051908152f35b3461029a57602036600319011261029a5760043567ffffffffffffffff811161029a57611279903690600401611c09565b61128e60018060a01b03600254163314611f95565b67ffffffffffffffff81116113bc576112a8600654611af0565b601f8111611354575b506000601f82116001146112ed5781926000926112e2575b5050600019600383901b1c191660019190911b17600655005b0135905082806112c9565b601f198216926000805160206122fb83398151915291805b85811061133c57508360019510611322575b505050811b01600655005b0135600019600384901b60f8161c19169055828080611317565b90926020600181928686013581550194019101611305565b601f820160051c6000805160206122fb8339815191520190602083106113a6575b601f0160051c6000805160206122fb83398151915201905b81811061139a57506112b1565b6000815560010161138d565b6000805160206122fb8339815191529150611375565b634e487b7160e01b600052604160045260246000fd5b3461029a57602036600319011261029a5760043560005260116020526020604060002054604051908152f35b3461029a576108bd6108b861141236611bc0565b9061141e828285611cb4565b6040519261142d602085611b2a565b6000845261215a565b3461029a57600036600319011261029a576201518042046000526010602052602060018060a01b0360406000205416604051908152f35b3461029a57600036600319011261029a576002546001600160a01b0316611495338214611f95565b60155490811561152c5760008080848194826015555af16114b4611fe9565b50156114f5576002546040519182526001600160a01b0316907f7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d590602090a2005b60405162461bcd60e51b815260206004820152600f60248201526e15da5d1a191c985dc819985a5b1959608a1b6044820152606490fd5b60405162461bcd60e51b81526020600482015260136024820152724e6f7468696e6720746f20776974686472617760681b6044820152606490fd5b3461029a57602036600319011261029a576001600160a01b03611588611b94565b166000526005602052602060ff604060002054166040519015158152f35b3461029a57600036600319011261029a5760206040516108ae8152f35b3461029a57602036600319011261029a577fd648b148d80dc2679d2fdb9285cb2ffcfdf033cf9c59737e4e6f840e89a518fa60206115ff611bfa565b61161460018060a01b03600254163314611f95565b151560ff19600d541660ff821617600d55604051908152a1005b3461029a57600036600319011261029a57602060ff600454166040519015158152f35b3461029a576108bd61166236611bc0565b91611cb4565b3461029a57600036600319011261029a57620151804204600052600f6020526020604060002054604051908152f35b600036600319011261029a57346118b0576101f4600354101561186b57600060ff6004541615611131576108ae6003541015611101576040516370a0823160e01b81523360048201526020816024817f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03165afa9081156110f6578291611839575b501561108757338152600560205260ff60408220541661104c573381526017602052604081205461101057604090338152600560205220600160ff19825416179055602061176f600354612109565b806003558060005260168252604060002060018060a01b0333166001600160601b0360a01b8254161790553360005260178252600160406000205533600052601a825260406000205481600052601b835260406000205533600052601a82526117dc816040600020612130565b80604051813360007fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef8180a4600081527ffee3adb92c9a2665de5c6e292be62f184708a973dabb8ebc5537a7f642497fd4843392a3604051908152f35b90506020813d602011611863575b8161185460209383611b2a565b810103126110ea575182611720565b3d9150611847565b60405162461bcd60e51b815260206004820152601e60248201527f4672656520737570706c79206f7665722c20757365206d696e745061696400006044820152606490fd5b60405162461bcd60e51b8152602060048201526014602482015273046726565206d696e742069732076616c756520360641b6044820152606490fd5b3461029a57604036600319011261029a57611905611b94565b602435906001600160a01b0361191a83612058565b16908133148015611983575b61192f90611c77565b600083815260186020526040812080546001600160a01b0319166001600160a01b039390931692831790559091907f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9259080a4005b50600082815260196020908152604080832033845290915290205460ff16611926565b3461029a57602036600319011261029a576004356000818152601660205260409020546119dd906001600160a01b03161515611c37565b6000526018602052602060018060a01b0360406000205416604051908152f35b3461029a57600036600319011261029a576040516000805481611a1f82611af0565b8085529160018116908115610a305750600114611a46576107248461071081860382611b2a565b80805260208120939250905b808210611a6b57509091508101602001610710826109c3565b919260018160209254838588010152019101909291611a52565b3461029a57602036600319011261029a576004359063ffffffff60e01b821680920361029a576020916380ac58cd60e01b8114908115611adf575b8115611ace575b5015158152f35b6301ffc9a760e01b14905083611ac7565b635b5e139f60e01b81149150611ac0565b90600182811c92168015611b20575b6020831014611b0a57565b634e487b7160e01b600052602260045260246000fd5b91607f1691611aff565b90601f8019910116810190811067ffffffffffffffff8211176113bc57604052565b60005b838110611b5f5750506000910152565b8181015183820152602001611b4f565b90602091611b8881518092818552858086019101611b4c565b601f01601f1916010190565b600435906001600160a01b038216820361029a57565b602435906001600160a01b038216820361029a57565b606090600319011261029a576004356001600160a01b038116810361029a57906024356001600160a01b038116810361029a579060443590565b60043590811515820361029a57565b9181601f8401121561029a5782359167ffffffffffffffff831161029a576020838186019501011161029a57565b15611c3e57565b60405162461bcd60e51b81526020600482015260116024820152702737b732bc34b9ba32b73a103a37b5b2b760791b6044820152606490fd5b15611c7e57565b60405162461bcd60e51b815260206004820152600e60248201526d139bdd08185d5d1a1bdc9a5e995960921b6044820152606490fd5b906001600160a01b03611cc684612058565b168033148015611f76575b8015611f48575b611ce29150611c77565b611ceb83612058565b6001600160a01b039283169216829003611f15576001600160a01b031690611d148215156120ce565b816000526017602052604060002054611ed057600083815260186020526040812080546001600160a01b03191690558390827f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9258280a4806000526017602052604060002080549060001982019182116105b057558160005260176020526040600020805490600182018092116105b057558260005260166020526040600020826001600160601b0360a01b82541617905582600052601b60205260406000205481600052601a602052604060002090815460001981019081116105b057611dfb9083612118565b90549060031b1c611e2981611e108486612118565b90919082549060031b91821b91600019901b1916179055565b600052601b60205260406000205580548015611eba576000190190611e4e8282612118565b8154906000199060031b1b191690555581600052601a60205260406000205483600052601b60205260406000205581600052601a602052611e93836040600020612130565b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef600080a4565b634e487b7160e01b600052603160045260246000fd5b60405162461bcd60e51b815260206004820152601e60248201527f526563697069656e7420616c726561647920686f6c64732061207061737300006044820152606490fd5b60405162461bcd60e51b815260206004820152600b60248201526a2bb937b7339037bbb732b960a91b6044820152606490fd5b506000526019602052604060002060018060a01b033316600052602052611ce260ff60406000205416611cd8565b5083600052601860205260018060a01b03604060002054163314611cd1565b15611f9c57565b60405162461bcd60e51b81526020600482015260096024820152682737ba1037bbb732b960b91b6044820152606490fd5b67ffffffffffffffff81116113bc57601f01601f191660200190565b3d15612014573d90611ffa82611fcd565b916120086040519384611b2a565b82523d6000602084013e565b606090565b1561202057565b60405162461bcd60e51b815260206004820152601060248201526f155b9cd85999481c9958da5c1a595b9d60821b6044820152606490fd5b6000908152601660205260409020546001600160a01b031661207b811515611c37565b90565b1561208557565b60405162461bcd60e51b8152602060048201526014602482015273115e1858dd081c1c9a58d9481c995c5d5a5c995960621b6044820152606490fd5b919082018092116105b057565b156120d557565b60405162461bcd60e51b815260206004820152600c60248201526b5a65726f206164647265737360a01b6044820152606490fd5b60001981146105b05760010190565b8054821015610cfe5760005260206000200190600090565b90815491680100000000000000008310156113bc5782611e1091600161215895018155612118565b565b919290803b15612229576121aa93600060209460405196879586948593630a85bd0160e11b855233600486015260018060a01b031660248501526044840152608060648401526084830190611b6f565b03926001600160a01b03165af180916000916121e3575b50906121cd5750600090565b6001600160e01b031916630a85bd0160e11b1490565b6020813d602011612221575b816121fc60209383611b2a565b810103126110ea5751906001600160e01b03198216820361221e5750386121c1565b80fd5b3d91506121ef565b50505050600190565b80156122da57600081805b6122c6575061224b81611fcd565b906122596040519283611b2a565b808252601f1961226882611fcd565b013660208401375b809280156122bf5760001982019182116105b0578193600a820660300192836030116105b05784511115610cfe57600a9260f81b6001600160f81b03191660001a908401601f01530491612270565b5050905090565b906122d2600a91612109565b91048061223d565b506040516122e9604082611b2a565b60018152600360fc1b60208201529056fef652222313e28459528d920b65115c16c04f3efc82aaedc97be59f3f377c0d3fa2646970667358221220d30ad77b12f94818840ba8532961a5351078cbd232997bc79fb747881378d90264736f6c634300081a0033";
+const ABI = [{"inputs":[{"internalType":"address","name":"agentId_","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"bool","name":"paused","type":"bool"}],"name":"BoostPausedSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"wallet","type":"address"},{"indexed":true,"internalType":"uint256","name":"day","type":"uint256"},{"indexed":false,"internalType":"uint8","name":"tier","type":"uint8"},{"indexed":false,"internalType":"uint256","name":"pointsAdded","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"totalPointsToday","type":"uint256"}],"name":"Boosted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"day","type":"uint256"},{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"prize","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ownerShare","type":"uint256"}],"name":"DaySettled","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"bool","name":"open","type":"bool"}],"name":"MintOpenSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"},{"indexed":false,"internalType":"bool","name":"paid","type":"bool"}],"name":"PassMinted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Withdrawn","type":"event"},{"inputs":[],"name":"FREE_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PAID_PRICE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"agentId","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"approved","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"baseURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"tier","type":"uint8"}],"name":"boost","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"boostPaused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"boostPoints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"boostPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"crownsWon","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"dayLeader","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"dayLeaderPoints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"dayPool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasMinted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"kingOfDay","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"lastSettledDay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"leader","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"leaderPoints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"mint","outputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"mintOpen","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"mintPaid","outputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"ownerBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"passPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"points","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"day","type":"uint256"},{"internalType":"address","name":"wallet","type":"address"}],"name":"pointsOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"poolToday","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newBaseURI","type":"string"}],"name":"setBaseURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"paused","type":"bool"}],"name":"setBoostPaused","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"open","type":"bool"}],"name":"setMintOpen","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"settleDay","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"tokensOfOwner","outputs":[{"internalType":"uint256[]","name":"","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalMinted","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+const KEY = "crownrace-contract";
+const MAX_SUPPLY = 2222;
+const state = { provider: null, signer: null, address: null, contractAddr: "", owner: "", registry: "", mintOpen: null, totalMinted: null, boostPaused: null, ownerBalance: null, baseURI: "" };
+
+const $ = (id) => document.getElementById(id);
+function setStatus(n, text, cls) { const el = $("status" + n); el.textContent = text; el.className = "status" + (cls ? " " + cls : ""); }
+function log(text) { const el = $("logPanel"); const t = new Date().toLocaleTimeString("en-GB"); el.textContent += "\n[" + t + "] " + text; el.scrollTop = el.scrollHeight; }
+function isOwner() { return !!(state.address && state.owner && state.address.toLowerCase() === state.owner.toLowerCase()); }
+function fmtBNB(bn) { try { return ethers.utils.formatEther(bn); } catch (e) { return "?"; } }
+
+function refresh() {
+  const ready = !!state.signer;
+  const deployed = !!state.contractAddr;
+  if (deployed) {
+    $("addr2").textContent = state.contractAddr;
+    $("addrbox2").classList.add("show");
+    $("scan2").href = "https://bscscan.com/address/" + state.contractAddr;
+    $("forgetBtn").style.display = "";
+    setStatus(2, "Deployed: " + state.contractAddr + (state.registry ? " · registry " + state.registry : ""), "done");
+  }
+  $("deployBtn").disabled = !ready || deployed;
+  const ownerOk = ready && deployed && isOwner();
+  if (deployed && ready && !isOwner() && state.owner) {
+    log("Note: connected wallet " + state.address + " is not the contract owner (" + state.owner + "). Owner-only buttons stay disabled.");
+  }
+  $("setBaseUriBtn").disabled = !ownerOk;
+  $("openMintBtn").disabled = !ownerOk || state.mintOpen === true;
+  $("closeMintBtn").disabled = !ownerOk || state.mintOpen !== true;
+  $("settleBtn").disabled = !ready || !deployed;
+  $("pauseBoostBtn").disabled = !ownerOk || state.boostPaused === true;
+  $("unpauseBoostBtn").disabled = !ownerOk || state.boostPaused !== true;
+  $("withdrawBtn").disabled = !ownerOk || !state.ownerBalance || state.ownerBalance.isZero();
+  $("refreshBtn").disabled = !ready;
+  $("balancePill").textContent = "OWNER BALANCE: " + (state.ownerBalance ? fmtBNB(state.ownerBalance) + " BNB" : "—");
+  if (deployed) {
+    if (state.mintOpen === true) setStatus(4, "Mint is OPEN — Agent ID holders can mint now.", "done");
+    else if (state.mintOpen === false) setStatus(4, "Mint is CLOSED — it starts closed at deployment. Open it here when you are ready to launch.");
+    if (state.baseURI) setStatus(3, "baseURI() currently returns " + state.baseURI + (state.baseURI.indexOf("YOUR-DOMAIN") >= 0 ? " — that is still the placeholder; replace it once a domain exists." : ""), state.baseURI.indexOf("YOUR-DOMAIN") >= 0 ? "" : "done");
+    else setStatus(3, "Ready — owner can set the base URI. The prefilled value is a placeholder; only use it once a real domain exists.");
+    setStatus(5, "Race state: boost " + (state.boostPaused === true ? "PAUSED" : state.boostPaused === false ? "live" : "unknown") + " · total minted " + (state.totalMinted === null ? "?" : state.totalMinted) + " / " + MAX_SUPPLY + ". Settle day can be called by anyone.");
+    setStatus(6, state.ownerBalance ? "Owner balance available to withdraw: " + fmtBNB(state.ownerBalance) + " BNB." : "Owner balance: —", state.ownerBalance && !state.ownerBalance.isZero() ? "done" : "");
+  }
+  $("summaryBox").value = deployed
+    ? "Agent Crown Race — deployment summary\nCrownRace contract: " + state.contractAddr + "\nAgent ID registry (constructor): " + (state.registry || REGISTRY_DEFAULT) + "\nOwner wallet: " + (state.owner || "-") + "\nMint open: " + (state.mintOpen === null ? "unknown" : state.mintOpen ? "YES" : "NO (open it in step 04)") + "\nTotal minted: " + (state.totalMinted === null ? "unknown" : state.totalMinted + " / " + MAX_SUPPLY) + "\nBase URI: " + (state.baseURI || "-") + "\nBoost paused: " + (state.boostPaused === null ? "unknown" : state.boostPaused ? "YES" : "NO") + "\nOwner balance: " + (state.ownerBalance ? fmtBNB(state.ownerBalance) + " BNB" : "unknown")
+    : "Not deployed yet.";
+}
+
+async function ensureChain() {
+  const id = await window.ethereum.request({ method: "eth_chainId" });
+  if (id === "0x38") return;
+  try {
+    await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x38" }] });
+  } catch (e) {
+    await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{ chainId: "0x38", chainName: "BNB Smart Chain", nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 }, rpcUrls: ["https://bsc-dataseed.binance.org"], blockExplorerUrls: ["https://bscscan.com"] }] });
+  }
+}
+
+async function readState() {
+  if (!state.contractAddr) { refresh(); return; }
+  try {
+    const c = new ethers.Contract(state.contractAddr, ABI, state.provider || (window.ethereum ? new ethers.providers.Web3Provider(window.ethereum) : null));
+    state.owner = await c.owner();
+    state.registry = await c.agentId();
+    state.mintOpen = await c.mintOpen();
+    state.totalMinted = (await c.totalMinted()).toString();
+    state.boostPaused = await c.boostPaused();
+    state.ownerBalance = await c.ownerBalance();
+    state.baseURI = await c.baseURI();
+    log("State read from " + state.contractAddr + " — owner " + state.owner + ", mintOpen " + state.mintOpen + ", totalMinted " + state.totalMinted + ", ownerBalance " + fmtBNB(state.ownerBalance) + " BNB.");
+  } catch (e) {
+    log("Could not read contract state: " + (e.message || e));
+  }
+  refresh();
+}
+
+async function connect() {
+  if (!window.ethereum) { setStatus(1, "No wallet found — open this page inside MetaMask, Trust Wallet or Binance Wallet.", "error"); return; }
+  await ensureChain();
+  state.provider = new ethers.providers.Web3Provider(window.ethereum);
+  state.signer = state.provider.getSigner();
+  state.address = await state.signer.getAddress();
+  setStatus(1, "Connected: " + state.address + " · BNB Chain (56)" + (state.contractAddr && state.owner ? (isOwner() ? " · this wallet IS the contract owner." : " · this wallet is NOT the contract owner.") : ""), "done");
+  $("connectBtn").textContent = "CONNECTED ✓";
+  log("Wallet connected: " + state.address);
+  await readState();
+}
+
+async function deploy() {
+  const registry = ($("registryInput").value || "").trim();
+  if (!ethers.utils.isAddress(registry)) { setStatus(2, "The registry address is not a valid address: " + registry, "error"); return; }
+  if (registry.toLowerCase() !== REGISTRY_DEFAULT.toLowerCase()) {
+    if (!confirm("The registry address differs from the mainnet SPACE ID .ai contract\n" + REGISTRY_DEFAULT + "\n\nYou entered:\n" + registry + "\n\nOn BNB mainnet the mint gate would check the WRONG contract. Deploy anyway?")) { setStatus(2, "Deploy cancelled — registry left as entered. For mainnet it must be " + REGISTRY_DEFAULT + "."); return; }
+  }
+  try {
+    setStatus(2, "Deploying CrownRace with registry " + registry + " — approve in your wallet…", "working");
+    log("Deploying CrownRace — constructor argument (Agent ID registry): " + registry);
+    const factory = new ethers.ContractFactory(ABI, BYTECODE, state.signer);
+    const contract = await factory.deploy(registry);
+    log("Deploy transaction sent: " + contract.deployTransaction.hash);
+    setStatus(2, "Transaction sent (" + contract.deployTransaction.hash + ") — waiting for confirmation…", "working");
+    await contract.deployed();
+    state.contractAddr = contract.address;
+    localStorage.setItem(KEY, state.contractAddr);
+    log("CrownRace deployed at " + state.contractAddr + ". Mint starts CLOSED — open it in step 04 when ready.");
+    await readState();
+  } catch (e) {
+    setStatus(2, "Failed: " + (e.message || String(e)), "error");
+    log("Deploy failed: " + (e.message || e));
+  }
+}
+
+function contract() { return new ethers.Contract(state.contractAddr, ABI, state.signer); }
+
+async function setBaseUri() {
+  const uri = ($("baseUriInput").value || "").trim();
+  if (!uri) { setStatus(3, "Enter a base URI first (it must end with /).", "error"); return; }
+  if (!uri.endsWith("/")) { setStatus(3, "The base URI must end with / — tokenURI appends the token id and .json.", "error"); return; }
+  if (uri.indexOf("YOUR-DOMAIN") >= 0 && !confirm("This base URI still contains the YOUR-DOMAIN placeholder:\n" + uri + "\n\nSet it on-chain anyway? (You can change it again later.)")) { return; }
+  try {
+    setStatus(3, "Setting base URI — approve in your wallet…", "working");
+    const tx = await contract().setBaseURI(uri);
+    await tx.wait();
+    const current = await contract().baseURI();
+    log("Base URI set: " + current + " (tx " + tx.hash + ")");
+    await readState();
+  } catch (e) {
+    setStatus(3, "Failed: " + (e.message || String(e)), "error");
+  }
+}
+
+async function setMint(open) {
+  if (open && !confirm("Open the mint now?\n\nAgent ID holders will be able to mint Crown Passes immediately (first 500 free, 1 per wallet). You can close it again any time in this step.")) { return; }
+  try {
+    setStatus(4, (open ? "Opening" : "Closing") + " the mint — approve in your wallet…", "working");
+    const tx = await contract().setMintOpen(open);
+    await tx.wait();
+    log("setMintOpen(" + open + ") confirmed: " + tx.hash);
+    await readState();
+  } catch (e) {
+    setStatus(4, "Failed: " + (e.message || String(e)), "error");
+  }
+}
+
+async function settle() {
+  try {
+    setStatus(5, "Settling the oldest unsettled day — approve in your wallet…", "working");
+    const tx = await contract().settleDay();
+    const receipt = await tx.wait();
+    let detail = "";
+    if (receipt && receipt.events) {
+      for (const ev of receipt.events) {
+        if (ev.event === "DaySettled") {
+          detail = " Day " + ev.args.day.toString() + ": winner " + ev.args.winner + ", prize " + fmtBNB(ev.args.prize) + " BNB, owner share " + fmtBNB(ev.args.ownerShare) + " BNB.";
+        }
+      }
+    }
+    log("settleDay() confirmed: " + tx.hash + detail);
+    setStatus(5, "Settled." + detail, "done");
+    await readState();
+  } catch (e) {
+    setStatus(5, "Failed (nothing to settle yet, or the day has not ended): " + (e.message || String(e)), "error");
+    log("settleDay failed: " + (e.message || e));
+  }
+}
+
+async function setBoostPaused(paused) {
+  try {
+    setStatus(5, (paused ? "Pausing" : "Unpausing") + " boosts — approve in your wallet…", "working");
+    const tx = await contract().setBoostPaused(paused);
+    await tx.wait();
+    log("setBoostPaused(" + paused + ") confirmed: " + tx.hash);
+    await readState();
+  } catch (e) {
+    setStatus(5, "Failed: " + (e.message || String(e)), "error");
+  }
+}
+
+async function withdraw() {
+  try {
+    setStatus(6, "Withdrawing the owner balance — approve in your wallet…", "working");
+    const before = state.ownerBalance;
+    const tx = await contract().withdraw();
+    await tx.wait();
+    log("Withdraw confirmed: " + tx.hash + " — sent " + (before ? fmtBNB(before) : "?") + " BNB to the owner wallet.");
+    await readState();
+  } catch (e) {
+    setStatus(6, "Failed: " + (e.message || String(e)), "error");
+  }
+}
+
+$("connectBtn").addEventListener("click", () => connect().catch((e) => { setStatus(1, "Connection failed: " + (e.message || e), "error"); }));
+$("refreshBtn").addEventListener("click", () => readState());
+$("deployBtn").addEventListener("click", deploy);
+$("forgetBtn").addEventListener("click", () => { if (confirm("Forget the saved contract address in this browser? The contract itself is unaffected on-chain.")) { localStorage.removeItem(KEY); state.contractAddr = ""; state.owner = ""; state.mintOpen = null; state.totalMinted = null; state.ownerBalance = null; $("addrbox2").classList.remove("show"); $("forgetBtn").style.display = "none"; setStatus(2, "Saved address forgotten. Connect and deploy, or reload after re-saving."); refresh(); } });
+$("setBaseUriBtn").addEventListener("click", setBaseUri);
+$("openMintBtn").addEventListener("click", () => setMint(true));
+$("closeMintBtn").addEventListener("click", () => setMint(false));
+$("settleBtn").addEventListener("click", settle);
+$("pauseBoostBtn").addEventListener("click", () => setBoostPaused(true));
+$("unpauseBoostBtn").addEventListener("click", () => setBoostPaused(false));
+$("withdrawBtn").addEventListener("click", withdraw);
+document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => { const t = $(b.dataset.copy).textContent; if (t) navigator.clipboard.writeText(t); b.textContent = "COPIED ✓"; setTimeout(() => { b.textContent = "COPY"; }, 1400); }));
+$("copySummaryBtn").addEventListener("click", () => { navigator.clipboard.writeText($("summaryBox").value); $("copySummaryBtn").textContent = "COPIED ✓"; setTimeout(() => { $("copySummaryBtn").textContent = "COPY SUMMARY"; }, 1400); });
+
+const saved = localStorage.getItem(KEY);
+if (saved && /^0x[0-9a-fA-F]{40}$/.test(saved)) { state.contractAddr = saved; }
+refresh();
+if (state.contractAddr) setStatus(2, "Saved contract found: " + state.contractAddr + " — connect the owner wallet to read its state.", "");
+log("Loaded. Bytecode embedded: " + ((BYTECODE.length - 2) / 2) + " bytes. Registry default: " + REGISTRY_DEFAULT + ". Mint is never opened automatically by this page.");
+</script>
+</body>
+</html>
