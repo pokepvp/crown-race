@@ -23,6 +23,21 @@ pre-checks below. Trust this address ONLY because it appears here, on the
 official site and in its mint.json; any other address claiming to be
 Crown Race is not this project.
 
+## GUARANTEED CROWN PRIZE — 5–11 NOV 2026 (UTC DAYS)
+
+For the seven UTC days 2026-11-05 through 2026-11-11, the day's points
+leader is guaranteed to receive at least 0.002 BNB in total for winning the
+day: the contract pays 50% of that day's boost pool at settleDay(), and the
+project tops up the remainder manually to the winner's wallet after the
+settle. A day with no boosts has no winner and no payout. The guarantee
+ends after the 2026-11-11 UTC day settles (00:00 UTC, 2026-11-12).
+
+## PAID FOUNDER LANE — PASSES #501–#1000
+
+The first 500 paid passes (token ids 501–1000) are the Paid Founder lane:
+crimson-ribbon artwork and the metadata Lane attribute "Paid Founder".
+Passes 1001–2222 carry the regular Paid lane.
+
 ## Contracts
 
 - CrownRace (CROWN pass + race): 0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c

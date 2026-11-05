@@ -87,6 +87,11 @@ en: {
   boardEmptyPre: "Loading the board from the contract…",
   boardEmptyNoMint: "No passes minted yet — the board is waiting for its first racers.",
   boardEmptyNoBoost: "Passes are out, but nobody has boosted yet today. The crown is wide open.",
+  guaranteeNote: "👑 GUARANTEED CROWN — 5–11 Nov (UTC days): finish a day as leader and you receive at least 0.002 BNB in total. The contract pays 50% of the day's boost pool; the project tops up the rest.",
+  foundersTitle: "🏅 Paid Founders — passes #501–#1000",
+  foundersNote: "The first 500 paid passes carry the Paid Founder lane — crimson-ribbon art and a permanent place on this wall. Mint a paid pass in this range and your wallet is recorded here.",
+  foundersEmpty: "No paid passes yet — the first paid minter becomes Paid Founder #501.",
+  foundersLoading: "Loading Paid Founders from the contract…",
   noBoostsYet: "No boosts yet",
   ptsSuffix: "pts",
   youChip: "YOU",
@@ -196,6 +201,11 @@ zh: {
   boardEmptyPre: "正在从合约加载排行榜…",
   boardEmptyNoMint: "尚无通行证被铸造——排行榜正在等待第一批参赛者。",
   boardEmptyNoBoost: "通行证已经发放，但今天还没有人助推。皇冠虚位以待。",
+  guaranteeNote: "👑 皇冠保底 — 11月5–11日（UTC 日）：若你以当日领先者身份结束当天，你的总奖金保底不少于 0.002 BNB。合约支付当日助推奖池的 50%，不足部分由项目方补足。",
+  foundersTitle: "🏅 付费创始人 — 通行证 #501–#1000",
+  foundersNote: "前 500 张付费通行证拥有「付费创始人」专属标识——深红绶带卡面与永久创始人记录。在此区间内铸造付费通行证，你的钱包将被记录在此墙上。",
+  foundersEmpty: "尚无付费通行证——第一位付费铸造者将成为付费创始人 #501。",
+  foundersLoading: "正在从合约加载付费创始人…",
   noBoostsYet: "暂无助推",
   ptsSuffix: "积分",
   youChip: "你",
@@ -506,6 +516,44 @@ async function refreshBoard() {
   }).join("");
 }
 
+
+// ── Paid Founders wall (#501-#1000) ───────────────────────────
+const founderState = { owners: new Map() };
+function loadFounderCache() {
+  try {
+    const j = JSON.parse(localStorage.getItem("crown_founders_v1") || "null");
+    if (j && j.owners) for (const [k, v] of Object.entries(j.owners)) founderState.owners.set(Number(k), v);
+  } catch { /* storage unavailable */ }
+}
+function saveFounderCache() {
+  try { localStorage.setItem("crown_founders_v1", JSON.stringify({ owners: Object.fromEntries(founderState.owners) })); } catch { /* storage unavailable */ }
+}
+async function refreshFounders() {
+  const list = $("foundersList");
+  if (!list) return;
+  const total = Number(await readUint(CONTRACT, SEL.totalMinted));
+  const hi = Math.min(total, 1000);
+  if (hi < 501) { list.innerHTML = '<p class="empty">' + t("foundersEmpty") + "</p>"; return; }
+  const missing = [];
+  for (let id = 501; id <= hi; id += 1) if (!founderState.owners.has(id)) missing.push(id);
+  for (let i = 0; i < missing.length; i += 12) {
+    const batch = missing.slice(i, i + 12);
+    const res = await Promise.allSettled(batch.map(id => readAddress(CONTRACT, SEL.ownerOf + encUint(id))));
+    res.forEach((r, j) => { if (r.status === "fulfilled" && validAddress(r.value) && !sameAddr(r.value, ZERO_ADDRESS)) founderState.owners.set(batch[j], r.value); });
+  }
+  if (missing.length) saveFounderCache();
+  const byWallet = new Map();
+  for (const [id, addr] of [...founderState.owners.entries()].sort((a, b) => a[0] - b[0])) {
+    if (id > hi) continue;
+    const k = addr.toLowerCase();
+    if (!byWallet.has(k)) byWallet.set(k, { addr, ids: [] });
+    byWallet.get(k).ids.push(id);
+  }
+  const rows = [...byWallet.values()];
+  if (!rows.length) { list.innerHTML = '<p class="empty">' + t("foundersLoading") + "</p>"; return; }
+  list.innerHTML = rows.map(w => `<div class="board-row"><span class="board-rank">🏅</span><span class="board-addr">${shortenAddress(w.addr)}${youAddress && sameAddr(w.addr, youAddress) ? ' <b class="you-chip">' + t("youChip") + "</b>" : ""}</span><span class="board-meta">${w.ids.map(id => "#" + String(id).padStart(4, "0")).join(" · ")}</span></div>`).join("");
+}
+
 // ── Hall of Kings ─────────────────────────────────────────────
 async function refreshHall() {
   const list = $("hallList");
@@ -625,7 +673,7 @@ function paintFooter() {
 async function refreshAll() {
   if (!contractsReady() || boardState.busy) return;
   boardState.busy = true;
-  try { await paintStats(); await refreshBoard(); await refreshHall(); if (youAddress) await paintYou(); }
+  try { await paintStats(); await refreshBoard(); await refreshFounders(); await refreshHall(); if (youAddress) await paintYou(); }
   catch { /* keep the last good render */ }
   finally { boardState.busy = false; }
 }
@@ -634,5 +682,6 @@ document.addEventListener("DOMContentLoaded", () => {
   paintFooter();
   applyLang();
   loadBoardCache();
+  loadFounderCache();
   if (contractsReady()) { refreshAll(); setInterval(refreshAll, 60000); }
 });
