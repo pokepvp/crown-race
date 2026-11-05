@@ -25,6 +25,17 @@ here reads LIVE. Any address claiming to be Crown Race before that is not this p
 - Binance .ai Agent ID NFT (eligibility registry, SPACE ID): 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F
 - Chain: BNB Smart Chain mainnet, chainId 56 (0x38)
 
+## Metadata (pass artwork)
+
+- baseURI (set with setBaseURI after deployment): https://crownrace.site/metadata/
+- tokenURI(id) = baseURI + id + ".json" — e.g. https://crownrace.site/metadata/1.json
+  serves the ERC-721 JSON for token 1. One file per token, ids 1-2222, all published.
+- Each JSON's "image" points to that token's SVG artwork:
+  https://crownrace.site/metadata/images/<id>.svg (e.g. .../images/1.svg).
+- Lane rule in the artwork and the "Lane" attribute: tokens 1-500 are the
+  First 500 free lane (gold "FIRST 500 - FREE PASS" ribbon on the art);
+  tokens 501-2222 are the paid lane ("STANDARD PASS" on the art, Lane = "Paid").
+
 ## The rules, exactly as the contract enforces them
 
 - Eligibility: the minting wallet must hold the .ai Agent ID NFT — balanceOf(wallet)

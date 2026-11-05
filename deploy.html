@@ -102,10 +102,10 @@
 
   <section class="step" id="step3">
     <div class="step-head"><span class="step-num">03</span><h2>Set base URI</h2></div>
-    <p>tokenURI(id) returns baseURI + id + ".json". The field below is a <b>placeholder</b> — leave it alone until a domain exists, then replace it with the real metadata folder URL (it must end with "/"). Minting, boosting and settling all work without it; this only names where pass artwork metadata will live.</p>
+    <p>tokenURI(id) returns baseURI + id + ".json". The field below is <b>prefilled with the real metadata URL</b> — all 2,222 pass metadata files (1.json … 2222.json) and their SVG artwork are already published under https://crownrace.site/metadata/, so you can set it as-is right after deploying (it must end with "/"). Minting, boosting and settling all work without it; this only names where pass artwork metadata lives.</p>
     <p class="status" id="status3">Waiting — deploy CrownRace first.</p>
     <div class="row">
-      <div><label class="f" for="baseUriInput">BASE URI</label><input type="text" class="wide" id="baseUriInput" value="https://YOUR-DOMAIN/metadata/" spellcheck="false" /></div>
+      <div><label class="f" for="baseUriInput">BASE URI</label><input type="text" class="wide" id="baseUriInput" value="https://crownrace.site/metadata/" spellcheck="false" /></div>
       <button id="setBaseUriBtn" type="button" disabled>SET BASE URI</button>
     </div>
   </section>
