@@ -144,7 +144,7 @@
   <section class="summary">
     <h2>Deployment summary — send this to Muse</h2>
     <p>When the deploy is done, copy this whole box in one paste and send it back. The contract address gets wired into the site's CROWN_CONFIG in app.js, the base URI and launch steps follow from there. The address is also kept in this browser, so you can reload this page without losing it.</p>
-    <textarea id="summaryBox" readonly>Not deployed yet.</textarea>
+    <textarea id="summaryBox" readonly>CrownRace deployed: 0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c (mint open). Connect the owner wallet for the live summary.</textarea>
     <div class="row" style="margin-top:12px"><button class="lime" id="copySummaryBtn" type="button">COPY SUMMARY</button></div>
   </section>
 
@@ -208,7 +208,7 @@ function refresh() {
   }
   $("summaryBox").value = deployed
     ? "Agent Crown Race — deployment summary\nCrownRace contract: " + state.contractAddr + "\nAgent ID registry (constructor): " + (state.registry || REGISTRY_DEFAULT) + "\nOwner wallet: " + (state.owner || "-") + "\nMint open: " + (state.mintOpen === null ? "unknown" : state.mintOpen ? "YES" : "NO (open it in step 04)") + "\nTotal minted: " + (state.totalMinted === null ? "unknown" : state.totalMinted + " / " + MAX_SUPPLY) + "\nBase URI: " + (state.baseURI || "-") + "\nBoost paused: " + (state.boostPaused === null ? "unknown" : state.boostPaused ? "YES" : "NO") + "\nOwner balance: " + (state.ownerBalance ? fmtBNB(state.ownerBalance) + " BNB" : "unknown")
-    : "Not deployed yet.";
+    : "CrownRace deployed: 0x924B1c9203EBC3EE3D4Fd2Af758B2DBDD3856e0c (mint open). Connect the owner wallet for the live summary.";
 }
 
 async function ensureChain() {

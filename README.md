@@ -14,6 +14,9 @@ Every UTC day, Crown Pass holders race for the crown: boost your points with sma
 - **Free lane** — the first 500 passes are free (`mint()`, value 0). After they are gone, a pass costs exactly 0.0007 BNB (`mintPaid()`).
 - **Boosts** (pass holders only, repeatable): Spark 0.00015 BNB = +5 pts · Surge 0.0005 BNB = +20 pts · Crown Rush 0.0015 BNB = +75 pts.
 - **Settle** — after 00:00 UTC anyone can call `settleDay()`; the day's leader is paid 50% of the day's boost pool and recorded as that day's King.
+- **Paid Founders** — passes #501–#1000 carry the Paid Founder lane (crimson-ribbon art, permanent wall on the site).
+- **Opening guarantee (5–11 Nov 2026)** — each day's winner is guaranteed at least 0.002 BNB in total; the contract pays its 50% pool share and the project tops up the rest manually.
+- **Weekly Crown Jackpot** — 20% of every paid mint (0.00014 BNB) accrues per 7-day period (Thu–Wed, UTC); the holder with the most daily crowns in the period wins it, paid by the project within 24 hours of the period end.
 
 ## Repository structure
 

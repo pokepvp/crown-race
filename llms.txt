@@ -64,7 +64,9 @@ Passes 1001–2222 carry the regular Paid lane.
   https://crownrace.site/metadata/images/<id>.svg (e.g. .../images/1.svg).
 - Lane rule in the artwork and the "Lane" attribute: tokens 1-500 are the
   First 500 free lane (gold "FIRST 500 · FREE PASS" ribbon on the art);
-  tokens 501-2222 are the paid lane ("STANDARD PASS" on the art, Lane = "Paid").
+  tokens 501-1000 are the Paid Founder lane (crimson "PAID FOUNDER" ribbon,
+  Lane = "Paid Founder"); tokens 1001-2222 are the standard paid lane
+  ("STANDARD PASS" on the art, Lane = "Paid").
 
 ## The rules, exactly as the contract enforces them
 
