@@ -376,14 +376,15 @@ Contract: ${addr}
 Preview first, and stop/report if any check fails:
 1. Call mintOpen() on the contract — it must return true. Call totalMinted().
 2. Check my wallet holds a Binance Agent ID: balanceOf(my wallet) on the .ai NFT contract ${AGENT_ID} must be more than 0.
-3. Check balanceOf(my wallet) on the Crown Race contract is 0 — one pass per wallet.
-4. If totalMinted() is below 500, call mint() with value exactly 0 wei (gas only).
+3. Check balanceOf(my wallet) on the Crown Race contract is 0 and hasMinted(my wallet) is false — one pass per wallet, ever.
+4. If totalMinted() is 2222, the collection is sold out — stop and report.
+   If totalMinted() is below 500, call mint() with value exactly 0 wei (gas only).
    If totalMinted() is 500 or more, call mintPaid() with value exactly ${PAID_PRICE_WEI} wei (0.0007 BNB).
 Never send any other amount. No token approvals are needed — do not approve anything. Reply with the transaction link.`;
   $("promptBoost").value =
 `Boost my points in today's Crown Race on BNB Chain (chainId 56).
 Contract: ${addr}
-Preview first: confirm balanceOf(my wallet) on the Crown Race contract is 1 — boosts are for pass holders only.
+Preview first: confirm balanceOf(my wallet) on the Crown Race contract is more than 0 — boosts are for pass holders only.
 Call boost(1) with value exactly ${TIERS[1].priceWei} wei (${TIERS[1].priceBNB} BNB) for +20 points.
 (Other tiers: boost(0) = ${TIERS[0].priceWei} wei, ${TIERS[0].priceBNB} BNB, +5 points · boost(2) = ${TIERS[2].priceWei} wei, ${TIERS[2].priceBNB} BNB, +75 points. Use a different tier only if I name it.)
 Points count for the current UTC day only. No token approvals are needed — do not approve anything. If the call would revert, stop and report why. Reply with the transaction link and my new total from pointsOf(today, my wallet).`;
