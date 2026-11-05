@@ -43,6 +43,13 @@ a { color: var(--gold2); }
 .brand-crown { width: 46px; height: 46px; display: block; filter: drop-shadow(0 0 8px rgba(212, 175, 55, .55)); }
 .brand-text b { color: var(--gold2); }
 .topbar-right { display: flex; align-items: center; gap: 8px; }
+.lang-toggle { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; flex: none; }
+.lang-btn {
+  background: transparent; border: 0; cursor: pointer;
+  font: inherit; font-size: .75rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--muted); padding: 6px 11px;
+}
+.lang-btn.active { background: linear-gradient(180deg, var(--gold2), var(--gold)); color: #171300; }
 .status-pill {
   font-size: .68rem; font-weight: 700; letter-spacing: .08em;
   padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap;

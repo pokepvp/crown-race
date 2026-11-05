@@ -8,7 +8,16 @@
 <meta property="og:title" content="Agent Crown Race">
 <meta property="og:description" content="One crown per day. Free pass for the first 500 Agent ID wallets — then 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://crownrace.site/">
+<meta property="og:image" content="https://crownrace.site/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agent Crown Race — the daily crown competition for Binance Agent ID holders. First 500 passes free.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agent Crown Race">
+<meta name="twitter:description" content="One crown per day. Free pass for the first 500 Agent ID wallets — then 0.0007 BNB. Boost, lead, get crowned at 00:00 UTC.">
+<meta name="twitter:image" content="https://crownrace.site/og.png">
 <meta name="twitter:site" content="@Fukooooof">
 <meta name="twitter:creator" content="@Fukooooof">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -22,8 +31,12 @@
     <span class="brand-text">AGENT <b>CROWN RACE</b></span>
   </a>
   <div class="topbar-right">
-    <span id="liveStatus" class="status-pill status-wait">CONTRACT NOT LIVE YET</span>
-    <button id="connectBtn" class="btn btn-ghost" type="button">Connect wallet</button>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="langEn" class="lang-btn active" type="button">EN</button>
+      <button id="langZh" class="lang-btn" type="button">中文</button>
+    </div>
+    <span id="liveStatus" class="status-pill status-wait" data-i18n="statusNotLive">CONTRACT NOT LIVE YET</span>
+    <button id="connectBtn" class="btn btn-ghost" type="button" data-i18n="connectWallet">Connect wallet</button>
   </div>
 </header>
 
@@ -32,8 +45,8 @@
   <!-- ── 1 · HERO ─────────────────────────────────────────── -->
   <section class="hero">
     <img class="hero-crown" src="logo.svg" alt="" aria-hidden="true">
-    <h1>One crown. <span class="gold">Every day.</span></h1>
-    <p class="hero-sub">
+    <h1 data-i18n-html="heroTitle">One crown. <span class="gold">Every day.</span></h1>
+    <p class="hero-sub" data-i18n-html="heroSub">
       The daily crown competition for <b>Binance .ai Agent ID</b> holders on BNB Chain.
       Hold a Crown Race Pass, boost your points, and finish the UTC day on top —
       the leader is crowned at <b>00:00 UTC</b> and receives <b>50% of that day's boost pool</b>.
@@ -41,38 +54,38 @@
 
     <div class="stat-grid">
       <div class="stat-card stat-leader">
-        <span class="stat-label">Today's leader</span>
+        <span class="stat-label" data-i18n="statLeader">Today's leader</span>
         <span class="stat-value" id="statLeader">—</span>
-        <span class="stat-sub"><b id="statLeaderPoints">—</b> points today</span>
+        <span class="stat-sub" data-i18n-html="statLeaderSub"><b id="statLeaderPoints">—</b> points today</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label">Today's boost pool</span>
+        <span class="stat-label" data-i18n="statPool">Today's boost pool</span>
         <span class="stat-value" id="statPool">—</span>
-        <span class="stat-sub">winner takes 50% at settle</span>
+        <span class="stat-sub" data-i18n="statPoolSub">winner takes 50% at settle</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label">Next settle in</span>
+        <span class="stat-label" data-i18n="statSettle">Next settle in</span>
         <span class="stat-value mono" id="statCountdown">—</span>
         <span class="stat-sub">00:00 UTC · 07:00 WIB</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label">Passes minted</span>
+        <span class="stat-label" data-i18n="statMinted">Passes minted</span>
         <span class="stat-value"><span id="statMinted">—</span><span class="stat-dim"> / 2,222</span></span>
-        <span class="stat-sub"><b id="statFreeLeft">—</b> free passes left of 500</span>
+        <span class="stat-sub" data-i18n-html="statMintedSub"><b id="statFreeLeft">—</b> free passes left of 500</span>
       </div>
     </div>
 
-    <p class="hero-note" id="mintStateNote">The contract is not deployed yet — this page goes live the moment it is.</p>
+    <p class="hero-note" id="mintStateNote" data-i18n="noteNotDeployed">The contract is not deployed yet — this page goes live the moment it is.</p>
     <div class="hero-actions">
-      <a class="btn btn-gold" href="#get-pass">Get your pass</a>
-      <a class="btn btn-ghost" href="#boost">Boost your points</a>
+      <a class="btn btn-gold" href="#get-pass" data-i18n="ctaGetPass">Get your pass</a>
+      <a class="btn btn-ghost" href="#boost" data-i18n="ctaBoost">Boost your points</a>
     </div>
   </section>
 
   <!-- ── GET A PASS ───────────────────────────────────────── -->
   <section class="panel" id="get-pass">
-    <h2>🎟️ Get your Crown Race Pass</h2>
-    <p class="panel-sub">
+    <h2 data-i18n="getPassTitle">🎟️ Get your Crown Race Pass</h2>
+    <p class="panel-sub" data-i18n-html="getPassSub">
       One pass per wallet. Your wallet must hold a Binance <b>.ai Agent ID</b>
       (<span class="mono small">0x60B9…022F</span>). The first <b>500</b> passes are
       <b>free</b> — value exactly 0, gas only. After they are gone, a pass costs
@@ -80,21 +93,21 @@
       Next pass price right now: <b id="statPassPrice">—</b>.
     </p>
 
-    <h3 class="prompt-title">🤖 Agent-first: give this to your AI agent</h3>
+    <h3 class="prompt-title" data-i18n="promptMintTitle">🤖 Agent-first: give this to your AI agent</h3>
     <div class="prompt-box">
       <textarea id="promptMint" class="prompt-text" rows="11" readonly></textarea>
-      <button class="btn btn-gold copy-btn" type="button" data-copy="promptMint">COPY PROMPT</button>
+      <button class="btn btn-gold copy-btn" type="button" data-copy="promptMint" data-i18n="copyPrompt">COPY PROMPT</button>
     </div>
 
     <details class="advanced">
-      <summary>Advanced — mint directly with a connected wallet</summary>
+      <summary data-i18n="advancedSummary">Advanced — mint directly with a connected wallet</summary>
       <div class="adv-body">
-        <p class="small muted">Connect a wallet that holds a .ai Agent ID. The buttons send the exact contract calls — no approvals are involved.</p>
+        <p class="small muted" data-i18n="advIntro">Connect a wallet that holds a .ai Agent ID. The buttons send the exact contract calls — no approvals are involved.</p>
         <div class="adv-actions">
-          <button class="btn btn-gold" id="mintFreeBtn" type="button">Mint free pass — mint()</button>
-          <button class="btn btn-ghost" id="mintPaidBtn" type="button">Mint paid pass — 0.0007 BNB</button>
+          <button class="btn btn-gold" id="mintFreeBtn" type="button" data-i18n="mintFreeBtn">Mint free pass — mint()</button>
+          <button class="btn btn-ghost" id="mintPaidBtn" type="button" data-i18n="mintPaidBtn">Mint paid pass — 0.0007 BNB</button>
         </div>
-        <p class="small muted" id="mintHint">Free mint works only while free passes remain; the paid button works only after they run out. The contract enforces both.</p>
+        <p class="small muted" id="mintHint" data-i18n="mintHint">Free mint works only while free passes remain; the paid button works only after they run out. The contract enforces both.</p>
       </div>
     </details>
   </section>
@@ -102,103 +115,103 @@
   <!-- ── 2 · RACE BOARD ───────────────────────────────────── -->
   <section class="panel" id="race">
     <div class="panel-head">
-      <h2>🏁 Today's race</h2>
-      <span class="refresh-note">Live from the contract · refreshes every 60s</span>
+      <h2 data-i18n="raceTitle">🏁 Today's race</h2>
+      <span class="refresh-note" data-i18n="raceRefresh">Live from the contract · refreshes every 60s</span>
     </div>
-    <p class="panel-sub" id="boardNote">Pass holders ranked by points earned today (UTC). Points reset at every settle.</p>
+    <p class="panel-sub" id="boardNote" data-i18n="boardNote">Pass holders ranked by points earned today (UTC). Points reset at every settle.</p>
     <div id="boardList" class="board-list">
-      <p class="empty">The board lights up once the contract is live.</p>
+      <p class="empty" data-i18n="boardEmptyPre">The board lights up once the contract is live.</p>
     </div>
   </section>
 
   <!-- ── 4 · YOU ──────────────────────────────────────────── -->
   <section class="panel" id="you">
-    <h2>🪪 Your race card</h2>
-    <p class="panel-sub">Connect a wallet, or paste any address to look up its pass, today's points and crown count.</p>
+    <h2 data-i18n="youTitle">🪪 Your race card</h2>
+    <p class="panel-sub" data-i18n="youSub">Connect a wallet, or paste any address to look up its pass, today's points and crown count.</p>
     <div class="you-lookup">
-      <input id="youInput" class="addr-input mono" type="text" spellcheck="false" placeholder="0x… wallet address">
-      <button class="btn btn-ghost" id="youCheckBtn" type="button">Look up</button>
+      <input id="youInput" class="addr-input mono" type="text" spellcheck="false" placeholder="0x… wallet address" data-i18n-ph="youPlaceholder">
+      <button class="btn btn-ghost" id="youCheckBtn" type="button" data-i18n="youLookup">Look up</button>
     </div>
     <div class="you-grid">
-      <div class="you-cell"><span class="stat-label">Wallet</span><span class="stat-value small mono" id="youAddr">—</span></div>
-      <div class="you-cell"><span class="stat-label">Pass</span><span class="stat-value small" id="youPass">—</span></div>
-      <div class="you-cell"><span class="stat-label">Points today</span><span class="stat-value small" id="youPoints">—</span></div>
-      <div class="you-cell"><span class="stat-label">Rank today</span><span class="stat-value small" id="youRank">—</span></div>
-      <div class="you-cell"><span class="stat-label">Crowns won</span><span class="stat-value small" id="youCrowns">—</span></div>
+      <div class="you-cell"><span class="stat-label" data-i18n="youWallet">Wallet</span><span class="stat-value small mono" id="youAddr">—</span></div>
+      <div class="you-cell"><span class="stat-label" data-i18n="youPassLabel">Pass</span><span class="stat-value small" id="youPass">—</span></div>
+      <div class="you-cell"><span class="stat-label" data-i18n="youPoints">Points today</span><span class="stat-value small" id="youPoints">—</span></div>
+      <div class="you-cell"><span class="stat-label" data-i18n="youRank">Rank today</span><span class="stat-value small" id="youRank">—</span></div>
+      <div class="you-cell"><span class="stat-label" data-i18n="youCrowns">Crowns won</span><span class="stat-value small" id="youCrowns">—</span></div>
     </div>
   </section>
 
   <!-- ── 5 · BOOST ────────────────────────────────────────── -->
   <section class="panel" id="boost">
-    <h2>🚀 Boost — climb today's board</h2>
-    <p class="panel-sub">
+    <h2 data-i18n="boostTitle">🚀 Boost — climb today's board</h2>
+    <p class="panel-sub" data-i18n-html="boostSub">
       Pass holders only. Every boost is paid in full into <b>today's pool</b> and can be
       repeated as often as you like. Points count for the current UTC day only.
     </p>
     <div class="tier-grid">
       <div class="tier-card">
-        <span class="tier-name">✦ Spark</span>
-        <span class="tier-points">+5 points</span>
+        <span class="tier-name" data-i18n="tierCard0">✦ Spark</span>
+        <span class="tier-points" data-i18n="pts5">+5 points</span>
         <span class="tier-price mono">0.00015 BNB</span>
-        <button class="btn btn-ghost boost-btn" type="button" data-boost="0">Boost — tier 0</button>
+        <button class="btn btn-ghost boost-btn" type="button" data-boost="0" data-i18n="tierBtn0">Boost — tier 0</button>
       </div>
       <div class="tier-card tier-mid">
-        <span class="tier-name">⚡ Surge</span>
-        <span class="tier-points">+20 points</span>
+        <span class="tier-name" data-i18n="tierCard1">⚡ Surge</span>
+        <span class="tier-points" data-i18n="pts20">+20 points</span>
         <span class="tier-price mono">0.0005 BNB</span>
-        <button class="btn btn-gold boost-btn" type="button" data-boost="1">Boost — tier 1</button>
+        <button class="btn btn-gold boost-btn" type="button" data-boost="1" data-i18n="tierBtn1">Boost — tier 1</button>
       </div>
       <div class="tier-card">
-        <span class="tier-name">👑 Crown Rush</span>
-        <span class="tier-points">+75 points</span>
+        <span class="tier-name" data-i18n="tierCard2">👑 Crown Rush</span>
+        <span class="tier-points" data-i18n="pts75">+75 points</span>
         <span class="tier-price mono">0.0015 BNB</span>
-        <button class="btn btn-ghost boost-btn" type="button" data-boost="2">Boost — tier 2</button>
+        <button class="btn btn-ghost boost-btn" type="button" data-boost="2" data-i18n="tierBtn2">Boost — tier 2</button>
       </div>
     </div>
 
-    <h3 class="prompt-title">🤖 Agent prompt — boost</h3>
+    <h3 class="prompt-title" data-i18n="promptBoostTitle">🤖 Agent prompt — boost</h3>
     <div class="prompt-box">
       <textarea id="promptBoost" class="prompt-text" rows="9" readonly></textarea>
-      <button class="btn btn-gold copy-btn" type="button" data-copy="promptBoost">COPY PROMPT</button>
+      <button class="btn btn-gold copy-btn" type="button" data-copy="promptBoost" data-i18n="copyPrompt">COPY PROMPT</button>
     </div>
 
-    <h3 class="prompt-title">🤖 Agent prompt — settle the day (anyone can call it)</h3>
+    <h3 class="prompt-title" data-i18n="promptSettleTitle">🤖 Agent prompt — settle the day (anyone can call it)</h3>
     <div class="prompt-box">
       <textarea id="promptSettle" class="prompt-text" rows="8" readonly></textarea>
-      <button class="btn btn-gold copy-btn" type="button" data-copy="promptSettle">COPY PROMPT</button>
+      <button class="btn btn-gold copy-btn" type="button" data-copy="promptSettle" data-i18n="copyPrompt">COPY PROMPT</button>
     </div>
     <div class="adv-actions">
-      <button class="btn btn-ghost" id="settleBtn" type="button">Call settleDay() from my wallet</button>
-      <span class="small muted">Permissionless — after 00:00 UTC it crowns the previous day's leader and pays their 50% automatically.</span>
+      <button class="btn btn-ghost" id="settleBtn" type="button" data-i18n="settleBtn">Call settleDay() from my wallet</button>
+      <span class="small muted" data-i18n="settleNote">Permissionless — after 00:00 UTC it crowns the previous day's leader and pays their 50% automatically.</span>
     </div>
   </section>
 
   <!-- ── 3 · HALL OF KINGS ────────────────────────────────── -->
   <section class="panel" id="hall">
     <div class="panel-head">
-      <h2>🏛️ Hall of Kings</h2>
-      <span class="refresh-note">Settled days, read from kingOfDay</span>
+      <h2 data-i18n="hallTitle">🏛️ Hall of Kings</h2>
+      <span class="refresh-note" data-i18n="hallRefresh">Settled days, read from kingOfDay</span>
     </div>
-    <p class="panel-sub" id="hallNote">Every settled day crowns one king. Crowns are counted on-chain, forever.</p>
+    <p class="panel-sub" id="hallNote" data-i18n="hallNote">Every settled day crowns one king. Crowns are counted on-chain, forever.</p>
     <div id="hallList" class="board-list">
-      <p class="empty">No day has been settled yet.</p>
+      <p class="empty" data-i18n="hallEmptyPre">No day has been settled yet.</p>
     </div>
   </section>
 
   <!-- ── 6 · RULES ────────────────────────────────────────── -->
   <section class="panel" id="rules">
-    <h2>📜 The rules — exactly as the contract enforces them</h2>
+    <h2 data-i18n="rulesTitle">📜 The rules — exactly as the contract enforces them</h2>
     <ol class="rules-list">
-      <li><b>Who can play.</b> Your wallet must hold a Binance .ai Agent ID (the SPACE ID .ai NFT at <span class="mono small">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</span>). The contract checks this on every mint.</li>
-      <li><b>One pass per wallet.</b> A wallet can mint at most one Crown Race Pass, ever, and can hold at most one at a time. Total supply is capped at <b>2,222</b>.</li>
-      <li><b>Free first, then paid.</b> The first <b>500</b> passes are minted with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only). Once they are gone, passes are minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>. There is no paid mint while free passes remain, and no free mint after they run out.</li>
-      <li><b>Mint must be open.</b> Minting works only while the owner has the mint open (<span class="mono">mintOpen()</span> = true). Prices are constants in the contract — nobody can change them after deployment.</li>
-      <li><b>Boosts.</b> Only pass holders can boost. Tier 0 costs exactly <b>0.00015 BNB</b> for <b>+5</b> points, tier 1 exactly <b>0.0005 BNB</b> for <b>+20</b>, tier 2 exactly <b>0.0015 BNB</b> for <b>+75</b>. Boosts can be repeated without limit, and the full amount of every boost enters that day's pool.</li>
-      <li><b>Days are UTC days.</b> Points are counted per UTC day and a day ends at <b>00:00 UTC</b> (07:00 WIB). Points do not carry over.</li>
-      <li><b>The lead.</b> The leader is the wallet with the most points today. On a tie, the wallet that reached the tied score <b>first</b> keeps the lead — a later equal score does not take it.</li>
-      <li><b>Settling.</b> After a day has ended, <b>anyone</b> can call <span class="mono">settleDay()</span> — no owner needed. It settles the oldest unsettled day: the day's leader is recorded as its king (<span class="mono">kingOfDay</span>, <span class="mono">crownsWon</span> +1) and is paid <b>50% of that day's boost pool</b>; the other <b>50%</b> goes to the project owner. A day with no boosts settles with no winner and no payment.</li>
-      <li><b>No approvals, ever.</b> Minting and boosting never ask for token approvals. If anything asks you to approve a token spend for this race, it is not this contract — stop.</li>
-      <li><b>No promises.</b> Points have no monetary value. The only payout that exists is the winner's 50% pool share described above, paid by the contract at settle. A win is never guaranteed — it depends entirely on the day's competition.</li>
+      <li data-i18n-html="rule1"><b>Who can play.</b> Your wallet must hold a Binance .ai Agent ID (the SPACE ID .ai NFT at <span class="mono small">0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F</span>). The contract checks this on every mint.</li>
+      <li data-i18n-html="rule2"><b>One pass per wallet.</b> A wallet can mint at most one Crown Race Pass, ever, and can hold at most one at a time. Total supply is capped at <b>2,222</b>.</li>
+      <li data-i18n-html="rule3"><b>Free first, then paid.</b> The first <b>500</b> passes are minted with <span class="mono">mint()</span> at value <b>exactly 0</b> (gas only). Once they are gone, passes are minted with <span class="mono">mintPaid()</span> at <b>exactly 0.0007 BNB</b>. There is no paid mint while free passes remain, and no free mint after they run out.</li>
+      <li data-i18n-html="rule4"><b>Mint must be open.</b> Minting works only while the owner has the mint open (<span class="mono">mintOpen()</span> = true). Prices are constants in the contract — nobody can change them after deployment.</li>
+      <li data-i18n-html="rule5"><b>Boosts.</b> Only pass holders can boost. Tier 0 costs exactly <b>0.00015 BNB</b> for <b>+5</b> points, tier 1 exactly <b>0.0005 BNB</b> for <b>+20</b>, tier 2 exactly <b>0.0015 BNB</b> for <b>+75</b>. Boosts can be repeated without limit, and the full amount of every boost enters that day's pool.</li>
+      <li data-i18n-html="rule6"><b>Days are UTC days.</b> Points are counted per UTC day and a day ends at <b>00:00 UTC</b> (07:00 WIB). Points do not carry over.</li>
+      <li data-i18n-html="rule7"><b>The lead.</b> The leader is the wallet with the most points today. On a tie, the wallet that reached the tied score <b>first</b> keeps the lead — a later equal score does not take it.</li>
+      <li data-i18n-html="rule8"><b>Settling.</b> After a day has ended, <b>anyone</b> can call <span class="mono">settleDay()</span> — no owner needed. It settles the oldest unsettled day: the day's leader is recorded as its king (<span class="mono">kingOfDay</span>, <span class="mono">crownsWon</span> +1) and is paid <b>50% of that day's boost pool</b>; the other <b>50%</b> goes to the project owner. A day with no boosts settles with no winner and no payment.</li>
+      <li data-i18n-html="rule9"><b>No approvals, ever.</b> Minting and boosting never ask for token approvals. If anything asks you to approve a token spend for this race, it is not this contract — stop.</li>
+      <li data-i18n-html="rule10"><b>No promises.</b> Points have no monetary value. The only payout that exists is the winner's 50% pool share described above, paid by the contract at settle. A win is never guaranteed — it depends entirely on the day's competition.</li>
     </ol>
   </section>
 
@@ -209,13 +222,13 @@
   <div class="footer-brand"><img class="footer-crown" src="logo-mark.svg" alt="">AGENT CROWN RACE</div>
   <p class="small muted">
     Crown Race Pass (CROWN) · ERC-721 · BNB Smart Chain (chainId 56)<br>
-    Contract: <span class="mono" id="contractAddr">not deployed yet</span><br>
-    <a id="footerBscScan" href="#" aria-disabled="true">BscScan — contract (after deployment)</a>
+    Contract: <span class="mono" id="contractAddr" data-i18n="notDeployedYet">not deployed yet</span><br>
+    <a id="footerBscScan" href="#" aria-disabled="true" data-i18n="bscScanPending">BscScan — contract (after deployment)</a>
     · <a id="footerX" href="https://x.com/Fukooooof">X — @Fukooooof</a>
-    · <a href="llms.txt">llms.txt for agents</a>
+    · <a href="llms.txt" data-i18n="llmsLink">llms.txt for agents</a>
     · <a href="mint.json">mint.json</a>
   </p>
-  <p class="small muted">An independent project for Binance Agent ID holders. Not affiliated with Binance. Rules above are the contract's rules — verify them on BscScan before you play.</p>
+  <p class="small muted" data-i18n="footerDisclaimer">An independent project for Binance Agent ID holders. Not affiliated with Binance. Rules above are the contract's rules — verify them on BscScan before you play.</p>
 </footer>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
