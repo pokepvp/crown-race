@@ -13,7 +13,7 @@ const CROWN_CONFIG = {
   chainId: 56,                  // BNB Smart Chain Mainnet
   chainHex: "0x38",
   agentIdAddress: "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F", // Binance .ai Agent ID NFT (SPACE ID)
-  xUrl: "https://x.com/Fukooooof" // official X profile (@Fukooooof)
+  xUrl: "https://x.com/PlayCrownRace" // official X profile (@PlayCrownRace)
 };
 const CONTRACT = CROWN_CONFIG.contractAddress;
 const AGENT_ID = CROWN_CONFIG.agentIdAddress;
@@ -667,7 +667,7 @@ function paintFooter() {
   }
   if (CROWN_CONFIG.xUrl) {
     const x = $("footerX");
-    x.href = CROWN_CONFIG.xUrl; x.textContent = "X — @Fukooooof"; x.removeAttribute("aria-disabled");
+    x.href = CROWN_CONFIG.xUrl; x.textContent = "X — @PlayCrownRace"; x.removeAttribute("aria-disabled");
   }
 }
 async function refreshAll() {
