@@ -20,6 +20,12 @@
   <clipPath id="cardClip"><rect x="30" y="30" width="940" height="940"/></clipPath>
 </defs>
 <defs>
+  <linearGradient id="founderBand" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f3a7b0"/>
+    <stop offset=".35" stop-color="#d94f63"/>
+    <stop offset=".65" stop-color="#b02338"/>
+    <stop offset="1" stop-color="#6d1122"/>
+  </linearGradient>
   <linearGradient id="goldBody" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0" stop-color="#fbe7a1"/>
     <stop offset=".3" stop-color="#f7dc8f"/>
@@ -149,6 +155,11 @@
 <g stroke="#8a6a1f" opacity=".75"><path d="M372 844 H472 M528 844 H628" stroke-width="1.5"/></g>
 <path d="M500 836 L508 844 L500 852 L492 844 Z" fill="#d4af37"/>
 <text x="504" y="906" text-anchor="middle" font-family="'Noto Sans', Arial, sans-serif" font-size="47" font-weight="600" letter-spacing="5" fill="#f7dc8f">#0877</text>
-<text x="503" y="944" text-anchor="middle" font-family="'Noto Sans', Arial, sans-serif" font-size="20" letter-spacing="4" fill="#97907c">STANDARD PASS &#183; BNB CHAIN &#183; AGENT ID</text>
-
+<text x="503" y="944" text-anchor="middle" font-family="'Noto Sans', Arial, sans-serif" font-size="20" letter-spacing="4" fill="#e9c860">PAID FOUNDER &#183; BNB CHAIN &#183; AGENT ID</text>
+<g clip-path="url(#cardClip)">
+  <g transform="rotate(-45 150 150)">
+    <rect x="-90" y="125" width="480" height="50" fill="url(#founderBand)" stroke="#5e1220" stroke-width="1.5"/>
+    <text x="150" y="159" text-anchor="middle" font-family="'Noto Sans', Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="2" fill="#ffe9ec">PAID FOUNDER</text>
+  </g>
+</g>
 </svg>
