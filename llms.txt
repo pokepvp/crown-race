@@ -32,6 +32,17 @@ project tops up the remainder manually to the winner's wallet after the
 settle. A day with no boosts has no winner and no payout. The guarantee
 ends after the 2026-11-11 UTC day settles (00:00 UTC, 2026-11-12).
 
+## WEEKLY CROWN JACKPOT
+
+Every 7 UTC days (Thu–Wed; period 1 = 2026-11-05..2026-11-11) the project
+runs a Weekly Crown Jackpot: 0.00014 BNB (20% of the paid pass price)
+accrues per paid mint made during the period. The pass holder with the
+most daily crowns (kingOfDay) in the period wins the whole jackpot, paid
+manually by the project within 24 hours of the period's end. Ties break
+on total points in the period, then on the earliest first crown. If no
+crown is won in a period, its jackpot rolls into the next period. The
+jackpot is a project payout, not a contract function.
+
 ## PAID FOUNDER LANE — PASSES #501–#1000
 
 The first 500 paid passes (token ids 501–1000) are the Paid Founder lane:

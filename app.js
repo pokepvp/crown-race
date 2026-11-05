@@ -92,6 +92,20 @@ en: {
   foundersNote: "The first 500 paid passes carry the Paid Founder lane — crimson-ribbon art and a permanent place on this wall. Mint a paid pass in this range and your wallet is recorded here.",
   foundersEmpty: "No paid passes yet — the first paid minter becomes Paid Founder #501.",
   foundersLoading: "Loading Paid Founders from the contract…",
+  jackpotTitle: "👑 Weekly Crown Jackpot",
+  jackpotSub: 'Every paid mint feeds this jackpot: <b>0.00014 BNB</b> (20% of the pass price) per paid mint in the period. The pass holder who wins the <b>most daily crowns</b> in the period takes the whole jackpot — paid by the project within 24 hours of the period ending. No crowns in a period? The jackpot <b>rolls over</b> into the next one.',
+  jackpotPrizeLabel: "Jackpot this period",
+  jackpotRateSub: "0.00014 BNB per paid mint",
+  jackpotPaidLabel: "Paid mints this period",
+  jackpotEachSub: "at 0.0007 BNB each",
+  jackpotLeaderLabel: "Champion frontrunner",
+  jackpotPeriodLabel: "Current period",
+  jackpotEnds: "ends",
+  jackpotNoneShort: "Wide open",
+  jackpotNone: "No crowns won yet this period.",
+  jackpotCrown1: "crown this period",
+  jackpotCrowns: "crowns this period",
+  rule11: '<b>Weekly Jackpot.</b> 20% of every paid pass (0.00014 BNB) accrues to the Weekly Crown Jackpot. The holder with the most daily crowns in a 7-day period (Thu–Wed, UTC) wins it — paid by the project within 24 hours of the period end. Ties break on total points in the period, then on the earliest first crown. A period with no crowns rolls its jackpot into the next period.',
   noBoostsYet: "No boosts yet",
   ptsSuffix: "pts",
   youChip: "YOU",
@@ -145,7 +159,7 @@ en: {
   rule7: '<b>The lead.</b> The leader is the wallet with the most points today. On a tie, the wallet that reached the tied score <b>first</b> keeps the lead — a later equal score does not take it.',
   rule8: '<b>Settling.</b> After a day has ended, <b>anyone</b> can call <span class="mono">settleDay()</span> — no owner needed. It settles the oldest unsettled day: the day\'s leader is recorded as its king (<span class="mono">kingOfDay</span>, <span class="mono">crownsWon</span> +1) and is paid <b>50% of that day\'s boost pool</b>; the other <b>50%</b> goes to the project owner. A day with no boosts settles with no winner and no payment.',
   rule9: '<b>No approvals, ever.</b> Minting and boosting never ask for token approvals. If anything asks you to approve a token spend for this race, it is not this contract — stop.',
-  rule10: '<b>No promises.</b> Points have no monetary value. The only payout that exists is the winner\'s 50% pool share described above, paid by the contract at settle. A win is never guaranteed — it depends entirely on the day\'s competition.',
+  rule10: '<b>No promises.</b> Points have no monetary value. The only payout the <b>contract</b> makes is the winner\'s 50% pool share at settle. The opening guarantee and the Weekly Jackpot are paid by the <b>project</b>, exactly as their sections describe — nothing beyond them is promised, and a win is never guaranteed: it depends entirely on the competition.',
   notDeployedYet: "not deployed yet",
   bscScanPending: "BscScan — contract (after deployment)",
   bscScanLive: "BscScan — contract",
@@ -206,6 +220,20 @@ zh: {
   foundersNote: "前 500 张付费通行证拥有「付费创始人」专属标识——深红绶带卡面与永久创始人记录。在此区间内铸造付费通行证，你的钱包将被记录在此墙上。",
   foundersEmpty: "尚无付费通行证——第一位付费铸造者将成为付费创始人 #501。",
   foundersLoading: "正在从合约加载付费创始人…",
+  jackpotTitle: "👑 每周皇冠大奖池",
+  jackpotSub: '每一次付费铸造都为奖池注资：本期内每张付费通行证注入 <b>0.00014 BNB</b>（通行证价格的 20%）。本期内赢得<b>每日皇冠次数最多</b>的持证者赢走全部奖池——由项目方在周期结束后 24 小时内支付。若本周期无人赢得皇冠，奖池<b>自动滚存</b>到下一周期。',
+  jackpotPrizeLabel: "本期奖池",
+  jackpotRateSub: "每张付费铸造注入 0.00014 BNB",
+  jackpotPaidLabel: "本期付费铸造",
+  jackpotEachSub: "每张 0.0007 BNB",
+  jackpotLeaderLabel: "冠军领先者",
+  jackpotPeriodLabel: "当前周期",
+  jackpotEnds: "结束于",
+  jackpotNoneShort: "虚位以待",
+  jackpotNone: "本周期尚无人赢得皇冠。",
+  jackpotCrown1: "顶皇冠（本周期）",
+  jackpotCrowns: "顶皇冠（本周期）",
+  rule11: '<b>每周大奖池。</b>每张付费通行证的 20%（0.00014 BNB）注入每周皇冠大奖池。在 7 天周期（周四至周三，UTC）内赢得每日皇冠次数最多的持证者赢走奖池——由项目方在周期结束后 24 小时内支付。平局时先比本周期总积分，再比首次夺冠的时间先后。若某周期无人夺冠，其奖池滚存到下一周期。',
   noBoostsYet: "暂无助推",
   ptsSuffix: "积分",
   youChip: "你",
@@ -259,7 +287,7 @@ zh: {
   rule7: '<b>领先规则。</b>领先者是今日积分最高的钱包。若积分相同，先达到该分数的钱包保持领先——之后达到相同分数者无法反超。',
   rule8: '<b>结算。</b>某日结束后，<b>任何人</b>都可以调用 <span class="mono">settleDay()</span>——无需项目方参与。它会结算最早一个未结算的日期：当日领先者被记录为该日的王者（<span class="mono">kingOfDay</span>，<span class="mono">crownsWon</span> +1），并获得<b>当日助推奖池的 50%</b>；另外 <b>50%</b> 归项目方所有。若某日没有任何助推，则该日结算时没有赢家，也没有任何付款。',
   rule9: '<b>永不需要授权。</b>铸造和助推从不要求代币授权。如果任何界面要求你为本次赛事授权代币支出，那不是本合约——请立即停止。',
-  rule10: '<b>不作任何承诺。</b>积分没有任何货币价值。唯一存在的奖励是上文所述的赢家 50% 奖池分成，由合约在结算时支付。获胜从不保证——完全取决于当日的竞争情况。',
+  rule10: '<b>不作任何承诺。</b>积分没有任何货币价值。<b>合约</b>支付的唯一奖励是结算时赢家的 50% 奖池分成。开幕保底与每周大奖池由<b>项目方</b>支付，且仅按其各自章节所述执行——除此之外不作任何承诺，获胜也从不保证：完全取决于竞争情况。',
   notDeployedYet: "尚未部署",
   bscScanPending: "BscScan — 合约（部署后可用）",
   bscScanLive: "BscScan — 合约",
@@ -554,6 +582,48 @@ async function refreshFounders() {
   list.innerHTML = rows.map(w => `<div class="board-row"><span class="board-rank">🏅</span><span class="board-addr">${shortenAddress(w.addr)}${youAddress && sameAddr(w.addr, youAddress) ? ' <b class="you-chip">' + t("youChip") + "</b>" : ""}</span><span class="board-meta">${w.ids.map(id => "#" + String(id).padStart(4, "0")).join(" · ")}</span></div>`).join("");
 }
 
+
+// ── Weekly Crown Jackpot ──────────────────────────────────────
+const JACKPOT_START_DAY = 20762;        // period 1 = UTC days 20762-20768 (5-11 Nov 2026)
+const JACKPOT_RATE_WEI = 140000000000000n; // 0.00014 BNB = 20% of the 0.0007 paid price
+const JACKPOT_PERIOD_START_TOTAL = { 0: 500 }; // totalMinted at each period's start (period 0 = paid era start)
+async function refreshJackpot() {
+  if (!$("jackpotPrize")) return;
+  const total = Number(await readUint(CONTRACT, SEL.totalMinted));
+  const today = todayUTC();
+  const pIdx = Math.max(0, Math.floor((today - JACKPOT_START_DAY) / 7));
+  const pStart = JACKPOT_START_DAY + pIdx * 7, pEnd = pStart + 6;
+  const fmtD = d => new Date(d * 86400000).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+  $("jackpotPeriod").textContent = "P" + (pIdx + 1) + " · " + fmtD(pStart) + "–" + fmtD(pEnd);
+  $("jackpotPeriodSub").textContent = t("jackpotEnds") + " " + fmtD(pEnd + 1) + " · 00:00 UTC";
+  const startTotal = JACKPOT_PERIOD_START_TOTAL[pIdx];
+  if (startTotal === undefined) {
+    $("jackpotPrize").textContent = "—";
+    $("jackpotPaid").textContent = fmtNum(Math.max(0, total - 500));
+  } else {
+    const paid = Math.max(0, total - startTotal);
+    $("jackpotPaid").textContent = fmtNum(paid);
+    $("jackpotPrize").textContent = formatBNB(JACKPOT_RATE_WEI * BigInt(paid));
+  }
+  const counts = new Map();
+  for (let d = pStart; d < today && d <= pEnd; d += 1) {
+    const king = await readAddress(CONTRACT, SEL.kingOfDay + encUint(d)).catch(() => "");
+    if (king && validAddress(king) && !sameAddr(king, ZERO_ADDRESS)) {
+      const k = king.toLowerCase();
+      counts.set(k, (counts.get(k) || 0) + 1);
+    }
+  }
+  let best = null, bestN = 0;
+  for (const [addr, n] of counts) if (n > bestN) { best = addr; bestN = n; }
+  if (best) {
+    $("jackpotLeader").textContent = shortenAddress(best);
+    $("jackpotLeaderSub").innerHTML = "<b>" + bestN + "</b> " + t(bestN === 1 ? "jackpotCrown1" : "jackpotCrowns");
+  } else {
+    $("jackpotLeader").textContent = t("jackpotNoneShort");
+    $("jackpotLeaderSub").textContent = t("jackpotNone");
+  }
+}
+
 // ── Hall of Kings ─────────────────────────────────────────────
 async function refreshHall() {
   const list = $("hallList");
@@ -673,7 +743,7 @@ function paintFooter() {
 async function refreshAll() {
   if (!contractsReady() || boardState.busy) return;
   boardState.busy = true;
-  try { await paintStats(); await refreshBoard(); await refreshFounders(); await refreshHall(); if (youAddress) await paintYou(); }
+  try { await paintStats(); await refreshBoard(); await refreshFounders(); await refreshJackpot(); await refreshHall(); if (youAddress) await paintYou(); }
   catch { /* keep the last good render */ }
   finally { boardState.busy = false; }
 }

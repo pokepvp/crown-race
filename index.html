@@ -21,7 +21,7 @@
 <meta name="twitter:site" content="@PlayCrownRace">
 <meta name="twitter:creator" content="@PlayCrownRace">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css?v=20261105-4">
+<link rel="stylesheet" href="styles.css?v=20261105-5">
 </head>
 <body>
 
@@ -197,6 +197,34 @@
   </section>
 
   <!-- ── 3 · HALL OF KINGS ────────────────────────────────── -->
+  <!-- ── WEEKLY JACKPOT ───────────────────────────────────── -->
+  <section class="panel" id="jackpot">
+    <h2 data-i18n="jackpotTitle">👑 Weekly Crown Jackpot</h2>
+    <p class="panel-sub" data-i18n-html="jackpotSub">Every paid mint feeds this jackpot: <b>0.00014 BNB</b> (20% of the pass price) per paid mint in the period. The pass holder who wins the <b>most daily crowns</b> in the period takes the whole jackpot — paid by the project within 24 hours of the period ending. No crowns in a period? The jackpot <b>rolls over</b> into the next one.</p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-label" data-i18n="jackpotPrizeLabel">Jackpot this period</span>
+        <span class="stat-value" id="jackpotPrize">—</span>
+        <span class="stat-sub" data-i18n="jackpotRateSub">0.00014 BNB per paid mint</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label" data-i18n="jackpotPaidLabel">Paid mints this period</span>
+        <span class="stat-value" id="jackpotPaid">—</span>
+        <span class="stat-sub" data-i18n="jackpotEachSub">at 0.0007 BNB each</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label" data-i18n="jackpotLeaderLabel">Champion frontrunner</span>
+        <span class="stat-value" id="jackpotLeader">—</span>
+        <span class="stat-sub" id="jackpotLeaderSub">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label" data-i18n="jackpotPeriodLabel">Current period</span>
+        <span class="stat-value" id="jackpotPeriod">—</span>
+        <span class="stat-sub" id="jackpotPeriodSub">—</span>
+      </div>
+    </div>
+  </section>
+
   <section class="panel" id="hall">
     <div class="panel-head">
       <h2 data-i18n="hallTitle">🏛️ Hall of Kings</h2>
@@ -221,7 +249,8 @@
       <li data-i18n-html="rule7"><b>The lead.</b> The leader is the wallet with the most points today. On a tie, the wallet that reached the tied score <b>first</b> keeps the lead — a later equal score does not take it.</li>
       <li data-i18n-html="rule8"><b>Settling.</b> After a day has ended, <b>anyone</b> can call <span class="mono">settleDay()</span> — no owner needed. It settles the oldest unsettled day: the day's leader is recorded as its king (<span class="mono">kingOfDay</span>, <span class="mono">crownsWon</span> +1) and is paid <b>50% of that day's boost pool</b>; the other <b>50%</b> goes to the project owner. A day with no boosts settles with no winner and no payment.</li>
       <li data-i18n-html="rule9"><b>No approvals, ever.</b> Minting and boosting never ask for token approvals. If anything asks you to approve a token spend for this race, it is not this contract — stop.</li>
-      <li data-i18n-html="rule10"><b>No promises.</b> Points have no monetary value. The only payout that exists is the winner's 50% pool share described above, paid by the contract at settle. A win is never guaranteed — it depends entirely on the day's competition.</li>
+      <li data-i18n-html="rule10"><b>No promises.</b> Points have no monetary value. The only payout the <b>contract</b> makes is the winner's 50% pool share at settle. The opening guarantee and the Weekly Jackpot are paid by the <b>project</b>, exactly as their sections describe — nothing beyond them is promised, and a win is never guaranteed: it depends entirely on the competition.</li>
+      <li data-i18n-html="rule11"><b>Weekly Jackpot.</b> 20% of every paid pass (0.00014 BNB) accrues to the Weekly Crown Jackpot. The holder with the most daily crowns in a 7-day period (Thu–Wed, UTC) wins it — paid by the project within 24 hours of the period end. Ties break on total points in the period, then on the earliest first crown. A period with no crowns rolls its jackpot into the next period.</li>
     </ol>
   </section>
 
@@ -243,6 +272,6 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<script src="app.js?v=20261105-4"></script>
+<script src="app.js?v=20261105-5"></script>
 </body>
 </html>
