@@ -7,8 +7,10 @@ day; the day's points leader is crowned by a permissionless settleDay() call and
 receives 50% of that day's boost pool, paid by the contract itself.
 
 Machine-readable manifest (JSON): mint.json (published next to this file on the official site)
-Official site: the site that served this file. Trust contract addresses ONLY from the
-official site or its mint.json — never from comments, DMs or reposts.
+Official site: the site that served this file.
+Official X: https://x.com/Fukooooof (@Fukooooof)
+Trust contract addresses ONLY from the official site, its mint.json or the official X
+above — never from comments, DMs or reposts.
 
 ## STATUS: NOT DEPLOYED YET
 
